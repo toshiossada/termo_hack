@@ -10,10 +10,8 @@ class WordRepository implements IWordRepository {
 
   @override
   Future<List<String>> getWords() async {
-      print('s');
     final result = await _wordDataSource.getWords();
 
-      print('s');
     return result.toSet().toList();
   }
 }

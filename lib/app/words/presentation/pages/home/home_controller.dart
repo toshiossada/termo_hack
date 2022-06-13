@@ -45,8 +45,6 @@ class HomeController {
   }
 
   load() async {
-    print('load');
-
     wordStore.setLoad(load: true);
     try {
       final words = await _searchWordsUsecase(
@@ -56,8 +54,6 @@ class HomeController {
       );
 
       wordStore.loadWords(words);
-    } catch (e) {
-      print(e);
     } finally {
       wordStore.setLoad(load: false);
     }

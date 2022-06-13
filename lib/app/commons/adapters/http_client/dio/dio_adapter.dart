@@ -22,13 +22,11 @@ class DioAdapter implements IHttpClientAdapter {
     Map<String, String>? headers,
   }) async {
     try {
-      print('a');
       final result = await dio.get(
         path,
         queryParameters: queryParameters,
         options: Options(headers: headers),
       );
-      print('a');
       final response = HttpResponse(
         data: result.data,
         statusCode: result.statusCode ?? 200,

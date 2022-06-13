@@ -27,7 +27,6 @@ class CustomInterceptors extends InterceptorsWrapper {
             name: 'Request[Payload]');
       }
     }
-    print('i');
     handler.next(options);
   }
 
@@ -49,7 +48,6 @@ class CustomInterceptors extends InterceptorsWrapper {
     DioError err,
     ErrorInterceptorHandler handler,
   ) {
-    print('r');
     HttpClientError failure;
     if (err.response?.statusCode == 401) {
       failure = HttpClientError(
