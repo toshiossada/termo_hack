@@ -13,7 +13,9 @@ class SearchWordsUsecase {
     required List<String> whiteList,
     required WordEntity wordEntity,
   }) async {
+    print('s');
     final words = await _wordRepository.getWords();
+    print(words);
 
     var result = words.where((word) {
       return word.length >= 4 && word.blackListLetter(blackList);

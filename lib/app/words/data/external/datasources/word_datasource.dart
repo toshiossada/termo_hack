@@ -13,12 +13,21 @@ class WordDatasource implements IWordDataSource {
 
   @override
   Future<List<String>> getWords() async {
-    final response = await _httpClient.get(
-        'https://raw.githubusercontent.com/toshiossada/termo/main/words.json');
+    try {
+      print('s');
+      final response = await _httpClient.get(
+          'https://raw.githubusercontent.com/toshiossada/termo/main/words.json');
+      
 
-    // final String response = await rootBundle.loadString('assets/words.json');
-    final data = await json.decode(response.data);
-    final words = (data['words'] as List).map((e) => e.toString()).toList();
-    return words;
+      //final String response = await rootBundle.loadString('assets/words.json');
+
+      final data = await json.decode(response.data);
+      print(data);
+      final words = (data['words'] as List).map((e) => e.toString()).toList();
+      return words;
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
   }
 }

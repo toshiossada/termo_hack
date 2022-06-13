@@ -1,4 +1,3 @@
-import 'package:asuka/asuka.dart' as asuka;
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -46,15 +45,22 @@ class HomeController {
   }
 
   load() async {
-    wordStore.setLoad(load: true);
-    final words = await _searchWordsUsecase(
-      blackList: wordStore.value.blackList,
-      whiteList: wordStore.value.whiteList,
-      wordEntity: wordStore.value.word,
-    );
+    print('load');
 
-    wordStore.loadWords(words);
-    wordStore.setLoad(load: false);
+    wordStore.setLoad(load: true);
+    try {
+      final words = await _searchWordsUsecase(
+        blackList: wordStore.value.blackList,
+        whiteList: wordStore.value.whiteList,
+        wordEntity: wordStore.value.word,
+      );
+
+      wordStore.loadWords(words);
+    } catch (e) {
+      print(e);
+    } finally {
+      wordStore.setLoad(load: false);
+    }
   }
 
   changeLetter(String? letter, int position) {

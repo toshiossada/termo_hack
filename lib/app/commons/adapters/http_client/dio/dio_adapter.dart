@@ -18,15 +18,17 @@ class DioAdapter implements IHttpClientAdapter {
   @override
   Future<HttpResponse> get(
     String path, {
-    Map<String, dynamic>? queryParameters,
-    Map<String, dynamic>? headers,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
   }) async {
     try {
+      print('a');
       final result = await dio.get(
         path,
         queryParameters: queryParameters,
         options: Options(headers: headers),
       );
+      print('a');
       final response = HttpResponse(
         data: result.data,
         statusCode: result.statusCode ?? 200,
@@ -47,8 +49,8 @@ class DioAdapter implements IHttpClientAdapter {
   Future<HttpResponse> post(
     String path, {
     dynamic data,
-    Map<String, dynamic>? queryParameters,
-    Map<String, dynamic>? headers,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
   }) async {
     try {
       final result = await dio.post(
@@ -77,8 +79,8 @@ class DioAdapter implements IHttpClientAdapter {
   Future<HttpResponse> put(
     String path, {
     dynamic data,
-    Map<String, dynamic>? queryParameters,
-    Map<String, dynamic>? headers,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
   }) async {
     try {
       final result = await dio.put(
@@ -107,8 +109,8 @@ class DioAdapter implements IHttpClientAdapter {
   Future<HttpResponse> delete(
     String path, {
     dynamic data,
-    Map<String, dynamic>? queryParameters,
-    Map<String, dynamic>? headers,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
   }) async {
     try {
       final result = await dio.delete(
