@@ -31,6 +31,7 @@ class _WhiteListPageState extends State<WhiteListPage> {
         children: [
           TextField(
             controller: controller.txtLetter,
+            onSubmitted: (v) => controller.addLetter(),
             decoration: const InputDecoration(
               hintText: 'Digite a letra que a palavra contém',
               border: OutlineInputBorder(),

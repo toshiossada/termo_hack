@@ -32,6 +32,7 @@ class _BlackListPageState extends State<BlacListPage> {
         children: [
           TextField(
             controller: controller.txtLetter,
+            onSubmitted: (v) => controller.addLetter(),
             decoration: const InputDecoration(
               hintText: 'Digite a letra que a palavra contém',
               border: OutlineInputBorder(),

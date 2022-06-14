@@ -22,6 +22,11 @@ class WhiteListController {
     if (txtLetter.text.isNotEmpty) {
       for (var e in txtLetter.text.runes) {
         var character = String.fromCharCode(e).toUpperCase();
+        if (wordStore.value.blackList.any((element) => element == character)) {
+          asuka.AsukaSnackbar.alert('Letra $character! ja esta na blackList').show();
+          continue;
+        }
+
         if (!wordStore.value.whiteList.any((element) =>
             element.toUpperCase() == txtLetter.text.toUpperCase())) {
           wordStore.addWhiteList(character);
