@@ -13,6 +13,7 @@ class WhiteListController {
 
   remove(String letter) => wordStore.removeWhiteList(letter);
   addLetter() {
+    if (txtLetter.text.trim().isEmpty) return;
     if (wordStore.value.whiteList.any(
         (element) => element.toUpperCase() == txtLetter.text.toUpperCase())) {
       asuka.AsukaSnackbar.alert('Letra ja esta na whitelist').show();
@@ -21,7 +22,8 @@ class WhiteListController {
     }
     if (txtLetter.text.isNotEmpty) {
       for (var e in txtLetter.text.runes) {
-        var character = String.fromCharCode(e).toUpperCase();
+        var character = String.fromCharCode(e).toUpperCase().trim();
+        if (character.isEmpty) return;
         if (wordStore.value.blackList.any((element) => element == character)) {
           asuka.AsukaSnackbar.alert('Letra $character! ja esta na blackList').show();
           continue;
