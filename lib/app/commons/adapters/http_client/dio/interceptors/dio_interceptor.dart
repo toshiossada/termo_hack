@@ -39,8 +39,8 @@ class CustomInterceptors extends InterceptorsWrapper {
       {
         log(json.encode('Response: ${response.data}'), name: 'Response');
       }
-      handler.next(response);
     }
+    handler.next(response);
   }
 
   @override

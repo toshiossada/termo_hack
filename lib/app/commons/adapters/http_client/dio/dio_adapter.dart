@@ -6,13 +6,13 @@ import '../http_response.dart';
 
 class DioAdapter implements IHttpClientAdapter {
   final Dio dio;
-  final List<InterceptorsWrapper> interceptors;
+  final List<InterceptorsWrapper>? interceptors;
 
   DioAdapter({
     required this.dio,
-    required this.interceptors,
+    this.interceptors,
   }) {
-    dio.interceptors.addAll(interceptors);
+    if (interceptors != null) dio.interceptors.addAll(interceptors!);
   }
 
   @override
