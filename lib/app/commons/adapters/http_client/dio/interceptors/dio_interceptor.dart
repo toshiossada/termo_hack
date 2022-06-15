@@ -36,9 +36,7 @@ class CustomInterceptors extends InterceptorsWrapper {
     ResponseInterceptorHandler handler,
   ) {
     if (kDebugMode) {
-      {
-        log(json.encode('Response: ${response.data}'), name: 'Response');
-      }
+      log(json.encode('Response: ${response.data}'), name: 'Response');
     }
     handler.next(response);
   }
