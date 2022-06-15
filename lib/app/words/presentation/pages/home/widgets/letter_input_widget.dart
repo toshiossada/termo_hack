@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class LetterInputWidget extends StatelessWidget {
   final Function(String?)? onChanged;
   final TextEditingController controller;
+  final TextInputAction? inputAction;
 
   const LetterInputWidget({
     Key? key,
     this.onChanged,
     required this.controller,
+    this.inputAction,
   }) : super(key: key);
 
   @override
@@ -19,6 +21,7 @@ class LetterInputWidget extends StatelessWidget {
           controller: controller,
           maxLength: 1,
           onChanged: onChanged,
+          textInputAction: inputAction ?? TextInputAction.next,
           decoration: const InputDecoration(
             counterText: '',
             border: OutlineInputBorder(),

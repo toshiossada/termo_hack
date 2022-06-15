@@ -83,6 +83,7 @@ class _HomePageState extends State<HomePage> {
               LetterInputWidget(
                 controller: controller.txtFifth,
                 onChanged: (value) => controller.changeLetter(value, 5),
+                inputAction: TextInputAction.done,
               ),
             ],
           ),
