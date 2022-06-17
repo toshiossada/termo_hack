@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'data/external/datasources/word_datasource.dart';
 import 'data/infra/datasources/word_datasource_interface.dart';
+import 'domain/usecases/build_plural_word.dart';
 import 'presentation/pages/black_list/black_list_controller.dart';
 import 'data/infra/repositories/word_repository.dart';
 import 'domain/repositories/word_repository_interface.dart';
@@ -25,7 +26,9 @@ class WordsModule extends Module {
             )),
         Bind.factory((i) => WhiteListController(wordStore: i())),
         Bind.factory((i) => BlackListController(wordStore: i())),
-        Bind.factory((i) => SearchWordsUsecase(wordRepository: i())),
+        Bind.factory((i) =>
+            SearchWordsUsecase(wordRepository: i(), buildPluralWord: i())),
+        Bind.factory((i) => BuildPluralWord()),
         Bind.factory<IWordRepository>(
             (i) => WordRepository(wordDataSource: i())),
         Bind.factory<IWordDataSource>((i) => WordDatasource(httpClient: i())),
