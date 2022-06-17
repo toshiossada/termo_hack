@@ -1,6 +1,6 @@
 import 'package:diacritic/diacritic.dart';
 
-class BuildPluralWord {
+class BuildPluralWordUsecase {
   List<String> call({
     required String word,
   }) {

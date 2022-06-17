@@ -1,13 +1,13 @@
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:termo/app/words/domain/usecases/build_plural_word.dart';
+import 'package:termo/app/words/domain/usecases/build_plural_word_usecase.dart';
 
 extension TestStr on String {
   toTestableStr() => removeDiacritics(toUpperCase());
 }
 
 void main() {
-  final usecase = BuildPluralWord();
+  final usecase = BuildPluralWordUsecase();
 
   testWidgets(
       '''

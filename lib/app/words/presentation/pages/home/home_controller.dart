@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import '../../../domain/usecases/filter_words_usecase.dart';
 
 import '../../../../commons/adapters/custom_alerts/dialog_adapter.dart';
 import '../../../domain/usecases/search_words_usecase.dart';
 import '../../stores/words_store.dart';
+import 'home_store.dart';
 import 'widgets/info_dialog/info_dialog_widget.dart';
 
 class HomeController {
@@ -14,15 +16,26 @@ class HomeController {
   final txtFifth = TextEditingController();
 
   final SearchWordsUsecase _searchWordsUsecase;
+  final FilterWordsUsecase _filterWordsUsecase;
   final WordsStore wordStore;
   final DialogAdapter _dialog;
+  final HomeStore store;
 
   HomeController({
     required SearchWordsUsecase searchWordsUsecase,
+    required FilterWordsUsecase filterWordsUsecase,
     required DialogAdapter dialog,
     required this.wordStore,
+    required this.store,
   })  : _searchWordsUsecase = searchWordsUsecase,
-        _dialog = dialog;
+        _dialog = dialog,
+        _filterWordsUsecase = filterWordsUsecase;
+
+  init() async {
+    final words = await _searchWordsUsecase();
+    store.value = words;
+    load();
+  }
 
   showWhitelist() async {
     await Modular.to.pushNamed('/whitelist');
@@ -47,10 +60,11 @@ class HomeController {
   load() async {
     wordStore.setLoad(load: true);
     try {
-      final words = await _searchWordsUsecase(
+      final words = _filterWordsUsecase(
         blackList: wordStore.value.blackList,
         whiteList: wordStore.value.whiteList,
         wordEntity: wordStore.value.word,
+        words: store.value,
       );
 
       wordStore.loadWords(words);
