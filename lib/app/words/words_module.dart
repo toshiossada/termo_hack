@@ -29,10 +29,13 @@ class WordsModule extends Module {
               store: i(),
               filterWordsUsecase: i(),
             )),
-        Bind.factory((i) => FilterWordsUsecase(buildPluralWord: i())),
+        Bind.factory((i) => FilterWordsUsecase()),
         Bind.factory((i) => WhiteListController(wordStore: i())),
         Bind.factory((i) => BlackListController(wordStore: i())),
-        Bind.factory((i) => SearchWordsUsecase(wordRepository: i())),
+        Bind.factory((i) => SearchWordsUsecase(
+              wordRepository: i(),
+              buildPluralWord: i(),
+            )),
         Bind.factory((i) => BuildPluralWordUsecase()),
         Bind.factory<IWordRepository>(
             (i) => WordRepository(wordDataSource: i())),
