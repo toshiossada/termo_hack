@@ -1,6 +1,7 @@
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 
+import '../../../commons/extensions/match_letter_extension.dart';
 import '../../domain/entities/word_entity.dart';
 import '../viewmodels/words_view_model.dart';
 
@@ -13,10 +14,10 @@ class WordsStore extends ValueNotifier<WordsViewModel> {
   loadWords(List<String> newWords) => value = value.copyWith(words: newWords);
 
   addBlackList(String letter) {
-    final l = removeDiacritics(letter.toUpperCase());
+    final formatLetter = letter.formatWord();
     var list = List<String>.from(value.blackList);
-    if (list.any((element) => element.toUpperCase() == l)) {
-      list.remove(l);
+    if (list.any((element) => element.toUpperCase() == formatLetter)) {
+      list.remove(formatLetter);
     }
     list.add(removeDiacritics(letter.toUpperCase()));
 

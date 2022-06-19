@@ -30,8 +30,14 @@ class WordsModule extends Module {
               filterWordsUsecase: i(),
             )),
         Bind.factory((i) => FilterWordsUsecase()),
-        Bind.factory((i) => WhiteListController(wordStore: i())),
-        Bind.factory((i) => BlackListController(wordStore: i())),
+        Bind.factory((i) => WhiteListController(
+              wordStore: i(),
+              dialog: i(),
+            )),
+        Bind.factory((i) => BlackListController(
+              wordStore: i(),
+              dialog: i(),
+            )),
         Bind.factory((i) => SearchWordsUsecase(
               wordRepository: i(),
               buildPluralWord: i(),
@@ -39,7 +45,7 @@ class WordsModule extends Module {
         Bind.factory((i) => BuildPluralWordUsecase()),
         Bind.factory<IWordRepository>(
             (i) => WordRepository(wordDataSource: i())),
-        Bind.factory<IWordDataSource>((i) => WordDatasource(httpClient: i())),
+        Bind.factory<IWordDatasource>((i) => WordDatasource(httpClient: i())),
       ];
 
   @override

@@ -2,10 +2,10 @@ import '../../../domain/repositories/word_repository_interface.dart';
 import '../datasources/word_datasource_interface.dart';
 
 class WordRepository implements IWordRepository {
-  final IWordDataSource _wordDataSource;
+  final IWordDatasource _wordDataSource;
 
   WordRepository({
-    required IWordDataSource wordDataSource,
+    required IWordDatasource wordDataSource,
   }) : _wordDataSource = wordDataSource;
 
   @override

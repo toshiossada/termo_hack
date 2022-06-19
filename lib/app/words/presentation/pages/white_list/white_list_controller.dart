@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 
-import 'package:asuka/asuka.dart' as asuka;
+import '../../../../commons/adapters/custom_alerts/dialog_adapter_interface.dart';
 import '../../stores/words_store.dart';
 
 class WhiteListController {
   final txtLetter = TextEditingController();
   final WordsStore wordStore;
+  final IDialogAdapter dialog;
 
   WhiteListController({
     required this.wordStore,
+    required this.dialog,
   });
 
   remove(String letter) => wordStore.removeWhiteList(letter);
@@ -16,7 +18,7 @@ class WhiteListController {
     if (txtLetter.text.trim().isEmpty) return;
     if (wordStore.value.whiteList.any(
         (element) => element.toUpperCase() == txtLetter.text.toUpperCase())) {
-      asuka.AsukaSnackbar.alert('Letra ja esta na whitelist').show();
+      dialog.alertSnackBar('Letra ja esta na whitelist').show();
       txtLetter.clear();
       return;
     }
@@ -25,7 +27,7 @@ class WhiteListController {
         var character = String.fromCharCode(e).toUpperCase().trim();
         if (character.isEmpty) return;
         if (wordStore.value.blackList.any((element) => element == character)) {
-          asuka.AsukaSnackbar.alert('Letra $character! ja esta na blackList').show();
+          dialog.alertSnackBar('Letra $character! ja esta na blackList');
           continue;
         }
 

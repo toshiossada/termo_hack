@@ -11,7 +11,7 @@ class BuildPluralWordUsecase {
     if (wordResult.endsWith('R') ||
         wordResult.endsWith('S') ||
         wordResult.endsWith('Z')) {
-      result.add('${wordResult}ES'); // Hello.
+      result.add('${wordResult}ES');
     } else if (wordResult.endsWith('AL') ||
         wordResult.endsWith('EL') ||
         wordResult.endsWith('OL') ||

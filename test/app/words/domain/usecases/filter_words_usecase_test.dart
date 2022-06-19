@@ -170,8 +170,8 @@ Então deve  retornar a palavra AMIGO e AZUIS
   });
   testWidgets('''
 Dado uma lista de palavras
-Quando a blacklist tiver vizia
-E a whitelist tiver vizia
+Quando a blacklist tiver vazia
+E a whitelist tiver vazia
 E segunda letra for L
 Então deve retornar nenhuma palavra
 ''', (tester) async {
@@ -192,6 +192,127 @@ Então deve retornar nenhuma palavra
     expect(result.any((element) => element == 'FUNIL'), false);
     expect(result.any((element) => element == 'UTEIS'), false);
     expect(result.any((element) => element == 'AZUIS'), false);
+    expect(result.any((element) => element == 'BANIU'), false);
+    expect(result.any((element) => element == 'BARES'), false);
+    expect(result.any((element) => element == 'CAPAZ'), false);
+    expect(result.any((element) => element == 'AMIGO'), false);
+  });
+  testWidgets('''
+Dado uma lista de palavras
+Quando a blacklist tiver vazia
+E a whitelist tiver vazia
+E terceira letra for Z
+Então deve retornar FUZIL
+''', (tester) async {
+    final blacklist = <String>[];
+    final whitelist = <String>[];
+    final wordEntity = WordEntity(thirdLetter: 'Z');
+
+    var result = usecase.call(
+      blackList: blacklist,
+      whiteList: whitelist,
+      wordEntity: wordEntity,
+      words: words,
+    );
+
+    expect(result.any((element) => element.length != 5), false);
+    expect(result.isEmpty, false);
+    expect(result.any((element) => element == 'FUZIL'), true);
+    expect(result.any((element) => element == 'FUNIL'), false);
+    expect(result.any((element) => element == 'UTEIS'), false);
+    expect(result.any((element) => element == 'AZUIS'), false);
+    expect(result.any((element) => element == 'BANIU'), false);
+    expect(result.any((element) => element == 'BARES'), false);
+    expect(result.any((element) => element == 'CAPAZ'), false);
+    expect(result.any((element) => element == 'AMIGO'), false);
+  });
+  testWidgets('''
+Dado uma lista de palavras
+Quando a blacklist tiver vazia
+E a whitelist tiver vazia
+E terceira quarta for I
+Então deve retornar nenhuma palavra FUZIL, FUNIL, UTEIS, AZUIS e BANIU
+''', (tester) async {
+    final blacklist = <String>[];
+    final whitelist = <String>[];
+    final wordEntity = WordEntity(fourthLetter: 'I');
+
+    var result = usecase.call(
+      blackList: blacklist,
+      whiteList: whitelist,
+      wordEntity: wordEntity,
+      words: words,
+    );
+
+    expect(result.any((element) => element.length != 5), false);
+    expect(result.isEmpty, false);
+    expect(result.any((element) => element == 'FUZIL'), true);
+    expect(result.any((element) => element == 'FUNIL'), true);
+    expect(result.any((element) => element == 'UTEIS'), true);
+    expect(result.any((element) => element == 'AZUIS'), true);
+    expect(result.any((element) => element == 'BANIU'), true);
+    expect(result.any((element) => element == 'BARES'), false);
+    expect(result.any((element) => element == 'CAPAZ'), false);
+    expect(result.any((element) => element == 'AMIGO'), false);
+  });
+
+  testWidgets('''
+Dado uma lista de palavras
+Quando a blacklist tiver vazia
+E a whitelist tiver vazia
+E terceira quinta for L
+Então deve retornar nenhuma palavra FUZIL e FUNIL
+''', (tester) async {
+    final blacklist = <String>[];
+    final whitelist = <String>[];
+    final wordEntity = WordEntity(fifthLetter: 'l');
+
+    var result = usecase.call(
+      blackList: blacklist,
+      whiteList: whitelist,
+      wordEntity: wordEntity,
+      words: words,
+    );
+
+    expect(result.any((element) => element.length != 5), false);
+    expect(result.isEmpty, false);
+    expect(result.any((element) => element == 'FUZIL'), true);
+    expect(result.any((element) => element == 'FUNIL'), true);
+    expect(result.any((element) => element == 'UTEIS'), false);
+    expect(result.any((element) => element == 'AZUIS'), false);
+    expect(result.any((element) => element == 'BANIU'), false);
+    expect(result.any((element) => element == 'BARES'), false);
+    expect(result.any((element) => element == 'CAPAZ'), false);
+    expect(result.any((element) => element == 'AMIGO'), false);
+  });
+
+  testWidgets('''
+Dado uma lista de palavras
+Quando a blacklist tiver vazia
+E a whitelist tiver vazia
+E terceira quarta for I e a quinta for S
+Então deve retornar nenhuma palavra  UTEIS e AZUIS
+''', (tester) async {
+    final blacklist = <String>[];
+    final whitelist = <String>[];
+    final wordEntity = WordEntity(
+      fourthLetter: 'i',
+      fifthLetter: 's',
+    );
+
+    var result = usecase.call(
+      blackList: blacklist,
+      whiteList: whitelist,
+      wordEntity: wordEntity,
+      words: words,
+    );
+
+    expect(result.any((element) => element.length != 5), false);
+    expect(result.isEmpty, false);
+    expect(result.any((element) => element == 'FUZIL'), false);
+    expect(result.any((element) => element == 'FUNIL'), false);
+    expect(result.any((element) => element == 'UTEIS'), true);
+    expect(result.any((element) => element == 'AZUIS'), true);
     expect(result.any((element) => element == 'BANIU'), false);
     expect(result.any((element) => element == 'BARES'), false);
     expect(result.any((element) => element == 'CAPAZ'), false);

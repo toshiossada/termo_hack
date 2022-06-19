@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../../../domain/usecases/filter_words_usecase.dart';
 
-import '../../../../commons/adapters/custom_alerts/dialog_adapter.dart';
+import '../../../../commons/adapters/custom_alerts/dialog_adapter_interface.dart';
 import '../../../domain/usecases/search_words_usecase.dart';
 import '../../stores/words_store.dart';
 import 'home_store.dart';
@@ -18,13 +18,13 @@ class HomeController {
   final SearchWordsUsecase _searchWordsUsecase;
   final FilterWordsUsecase _filterWordsUsecase;
   final WordsStore wordStore;
-  final DialogAdapter _dialog;
+  final IDialogAdapter _dialog;
   final HomeStore store;
 
   HomeController({
     required SearchWordsUsecase searchWordsUsecase,
     required FilterWordsUsecase filterWordsUsecase,
-    required DialogAdapter dialog,
+    required IDialogAdapter dialog,
     required this.wordStore,
     required this.store,
   })  : _searchWordsUsecase = searchWordsUsecase,

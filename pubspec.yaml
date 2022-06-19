@@ -7,6 +7,11 @@ version: 1.0.0+1
 
 environment:
   sdk: '>=2.17.1 <3.0.0'
+scripts:
+  coverage: full_coverage -i *_modules.dart
+  check-unused-files: flutter pub run dart_code_metrics:metrics check-unused-files lib > metrics.txt
+  analyze: flutter pub run dart_code_metrics:metrics analyze  lib > metrics.txt
+  check-unused-code: flutter pub run dart_code_metrics:metrics check-unused-code lib > metrics.txt
 
 dependencies:
   flutter:
@@ -28,6 +33,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   mockito: ^5.2.0
   build_runner: ^2.1.11
+  dart_code_metrics: ^4.15.2
 
 flutter:
   uses-material-design: true
