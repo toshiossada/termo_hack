@@ -36,6 +36,7 @@ dev_dependencies:
   dart_code_metrics: ^4.15.2
   modular_test: ^2.0.0
 
+
 flutter:
   uses-material-design: true
   assets:

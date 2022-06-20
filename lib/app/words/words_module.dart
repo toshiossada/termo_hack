@@ -21,7 +21,7 @@ class WordsModule extends Module {
   List<Bind> get binds => [
         Bind.lazySingleton((i) => WordsStore()),
         Bind.lazySingleton((i) => HomeStore()),
-        Bind.factory((i) => InfoDialogController()),
+        Bind.factory((i) => InfoDialogController(launchUrlAdapter: i())),
         Bind.factory((i) => HomeController(
               wordStore: i(),
               searchWordsUsecase: i(),

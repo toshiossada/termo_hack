@@ -65,22 +65,27 @@ class _HomePageState extends State<HomePage> {
           Row(
             children: [
               LetterInputWidget(
+                key: const Key('firstLetter'),
                 controller: controller.txtFirst,
                 onChanged: (value) => controller.changeLetter(value, 1),
               ),
               LetterInputWidget(
+                key: const Key('secondLetter'),
                 controller: controller.txtSecond,
                 onChanged: (value) => controller.changeLetter(value, 2),
               ),
               LetterInputWidget(
+                key: const Key('thirdLetter'),
                 controller: controller.txtThird,
                 onChanged: (value) => controller.changeLetter(value, 3),
               ),
               LetterInputWidget(
+                key: const Key('fourthLetter'),
                 controller: controller.txtFourth,
                 onChanged: (value) => controller.changeLetter(value, 4),
               ),
               LetterInputWidget(
+                key: const Key('fifthLetter'),
                 controller: controller.txtFifth,
                 onChanged: (value) => controller.changeLetter(value, 5),
                 inputAction: TextInputAction.done,
@@ -103,6 +108,7 @@ class _HomePageState extends State<HomePage> {
                       visible: !value.loading,
                       child: Expanded(
                         child: ListView.builder(
+                          key: const Key('ListOfWords'),
                           itemCount: value.words.length,
                           itemBuilder: (_, index) {
                             final word = value.words[index];

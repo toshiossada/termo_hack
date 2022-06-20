@@ -6,11 +6,11 @@ class LetterInputWidget extends StatelessWidget {
   final TextInputAction? inputAction;
 
   const LetterInputWidget({
-    Key? key,
+    super.key,
     this.onChanged,
     required this.controller,
     this.inputAction,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

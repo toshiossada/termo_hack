@@ -1,10 +1,16 @@
-import 'package:url_launcher/url_launcher.dart';
+import '../../../../../../commons/adapters/custom_alerts/launch_url/launch_url_adapter.dart';
 
 class InfoDialogController {
-  final gitHub =
-      Uri.parse('https://github.com/toshiossada/termo/blob/main/words.json');
-  final email = Uri.parse('mailto:smith@example.org?subject=[Novo%20Termo]');
+  final LaunchUrlAdapter _launchUrlAdapter;
+  final gitHub = 'https://github.com/toshiossada/termo/blob/main/words.json';
+  final email = 'toshiossada@toshiossada.dev';
 
-  openGithub() => launchUrl(gitHub);
-  openEmail() => launchUrl(email);
+  InfoDialogController({required LaunchUrlAdapter launchUrlAdapter})
+      : _launchUrlAdapter = launchUrlAdapter;
+
+  Future<bool> openGithub() => _launchUrlAdapter.openUrl(gitHub);
+  Future<bool> openEmail() => _launchUrlAdapter.sendEmail(
+        email: email,
+        subject: '[Novo%20Termo]',
+      );
 }
