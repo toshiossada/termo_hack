@@ -27,13 +27,13 @@ void main() {
     usecase = FilterWordsUsecase();
   });
 
-  testWidgets('''
+  test('''
 Dado uma lista de palavras
 Quando a blacklist for vazia
 E a whitelist for vazia
 E nenhuma letra for digitada
 Então deve  retornar as palavras AMIGO, AZUIS, BARES, CAPAZ, FUZIL, BANIU, FUNIL E UTEIS
-''', (tester) async {
+''', () async {
     final blacklist = <String>[];
     final whitelist = <String>[];
     final wordEntity = WordEntity();
@@ -56,13 +56,13 @@ Então deve  retornar as palavras AMIGO, AZUIS, BARES, CAPAZ, FUZIL, BANIU, FUNI
     expect(result.any((element) => element == 'AMIGO'), true);
   });
 
-  testWidgets('''
+  test('''
 Dado uma lista de palavras
 Quando a blacklist tiver a letra U
 E a whitelist for vazia
 E nenhuma letra for digitada
 Então NÃO deve  retornar as palavras FUNIL, AZUIS, BANIU, UTEIS e FUZIL
-''', (tester) async {
+''', () async {
     final blacklist = <String>['U'];
     final whitelist = <String>[];
     final wordEntity = WordEntity();
@@ -84,13 +84,13 @@ Então NÃO deve  retornar as palavras FUNIL, AZUIS, BANIU, UTEIS e FUZIL
     expect(result.any((element) => element == 'CAPAZ'), true);
     expect(result.any((element) => element == 'AMIGO'), true);
   });
-  testWidgets('''
+  test('''
 Dado uma lista de palavras
 Quando a blacklist tiver a letra U
 E a whitelist tiver a letra A
 E nenhuma letra for digitada
 Então NÃO deve  retornar as palavras FUNIL, AZUIS, BANIU, UTEIS e FUZIL
-''', (tester) async {
+''', () async {
     final blacklist = <String>['U'];
     final whitelist = <String>['A'];
     final wordEntity = WordEntity();
@@ -112,13 +112,13 @@ Então NÃO deve  retornar as palavras FUNIL, AZUIS, BANIU, UTEIS e FUZIL
     expect(result.any((element) => element == 'CAPAZ'), true);
     expect(result.any((element) => element == 'AMIGO'), true);
   });
-  testWidgets('''
+  test('''
 Dado uma lista de palavras
 Quando a blacklist tiver a letra U
 E a whitelist tiver a letra 'A' e 'I'
 E nenhuma letra for digitada
 Então NÃO deve  retornar as palavras FUNIL, AZUIS, BANIU, UTEIS e FUZIL
-''', (tester) async {
+''', () async {
     final blacklist = <String>['U'];
     final whitelist = <String>['A', 'I'];
     final wordEntity = WordEntity();
@@ -140,13 +140,13 @@ Então NÃO deve  retornar as palavras FUNIL, AZUIS, BANIU, UTEIS e FUZIL
     expect(result.any((element) => element == 'CAPAZ'), false);
     expect(result.any((element) => element == 'AMIGO'), true);
   });
-  testWidgets('''
+  test('''
 Dado uma lista de palavras
 Quando a blacklist tiver vazia
 E a whitelist tiver vazia
 E a primeira letra for A
 Então deve  retornar a palavra AMIGO e AZUIS
-''', (tester) async {
+''', () async {
     final blacklist = <String>[];
     final whitelist = <String>[];
     final wordEntity = WordEntity(firstLetter: 'A');
@@ -168,13 +168,13 @@ Então deve  retornar a palavra AMIGO e AZUIS
     expect(result.any((element) => element == 'CAPAZ'), false);
     expect(result.any((element) => element == 'AMIGO'), true);
   });
-  testWidgets('''
+  test('''
 Dado uma lista de palavras
 Quando a blacklist tiver vazia
 E a whitelist tiver vazia
 E segunda letra for L
 Então deve retornar nenhuma palavra
-''', (tester) async {
+''', () async {
     final blacklist = <String>[];
     final whitelist = <String>[];
     final wordEntity = WordEntity(secondLetter: 'L');
@@ -197,13 +197,13 @@ Então deve retornar nenhuma palavra
     expect(result.any((element) => element == 'CAPAZ'), false);
     expect(result.any((element) => element == 'AMIGO'), false);
   });
-  testWidgets('''
+  test('''
 Dado uma lista de palavras
 Quando a blacklist tiver vazia
 E a whitelist tiver vazia
 E terceira letra for Z
 Então deve retornar FUZIL
-''', (tester) async {
+''', () async {
     final blacklist = <String>[];
     final whitelist = <String>[];
     final wordEntity = WordEntity(thirdLetter: 'Z');
@@ -226,13 +226,13 @@ Então deve retornar FUZIL
     expect(result.any((element) => element == 'CAPAZ'), false);
     expect(result.any((element) => element == 'AMIGO'), false);
   });
-  testWidgets('''
+  test('''
 Dado uma lista de palavras
 Quando a blacklist tiver vazia
 E a whitelist tiver vazia
 E terceira quarta for I
 Então deve retornar nenhuma palavra FUZIL, FUNIL, UTEIS, AZUIS e BANIU
-''', (tester) async {
+''', () async {
     final blacklist = <String>[];
     final whitelist = <String>[];
     final wordEntity = WordEntity(fourthLetter: 'I');
@@ -256,13 +256,13 @@ Então deve retornar nenhuma palavra FUZIL, FUNIL, UTEIS, AZUIS e BANIU
     expect(result.any((element) => element == 'AMIGO'), false);
   });
 
-  testWidgets('''
+  test('''
 Dado uma lista de palavras
 Quando a blacklist tiver vazia
 E a whitelist tiver vazia
 E terceira quinta for L
 Então deve retornar nenhuma palavra FUZIL e FUNIL
-''', (tester) async {
+''', () async {
     final blacklist = <String>[];
     final whitelist = <String>[];
     final wordEntity = WordEntity(fifthLetter: 'l');
@@ -286,13 +286,13 @@ Então deve retornar nenhuma palavra FUZIL e FUNIL
     expect(result.any((element) => element == 'AMIGO'), false);
   });
 
-  testWidgets('''
+  test('''
 Dado uma lista de palavras
 Quando a blacklist tiver vazia
 E a whitelist tiver vazia
 E terceira quarta for I e a quinta for S
 Então deve retornar nenhuma palavra  UTEIS e AZUIS
-''', (tester) async {
+''', () async {
     final blacklist = <String>[];
     final whitelist = <String>[];
     final wordEntity = WordEntity(

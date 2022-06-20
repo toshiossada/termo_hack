@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'commons/adapters/custom_alerts/asuka/asuka_dialog.dart';
-import 'commons/adapters/custom_alerts/dialog_adapter_interface.dart';
+import 'commons/adapters/custom_alerts/dialog_adapter.dart';
 import 'commons/adapters/http_client/dio/dio_adapter.dart';
 import 'commons/adapters/http_client/dio/interceptors/dio_interceptor.dart';
 import 'commons/adapters/http_client/http_client_adapter.dart';

@@ -1,16 +1,16 @@
 import 'package:asuka/asuka.dart' as asuka;
 import 'package:flutter/material.dart';
 
-import '../dialog_adapter_interface.dart';
+import '../dialog_adapter.dart';
 
 class AsukaDialog implements IDialogAdapter {
   @override
-  showDialog(Widget child) {
+  void showDialog(Widget child) {
     asuka.showDialog(builder: (context) => child);
   }
 
   @override
-  alertSnackBar(String text) {
+  void alertSnackBar(String text) {
     asuka.AsukaSnackbar.alert(text).show();
   }
 }

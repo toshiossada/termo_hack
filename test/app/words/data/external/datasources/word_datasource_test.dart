@@ -20,11 +20,11 @@ void main() {
     wordDatasouce = WordDatasource(httpClient: httpClient);
   });
 
-  testWidgets('''
+  test('''
 Dado a requisiçao das palavras na API
 Quando a API retornar lista de palavras
 Então deve acessar lista de palavras na chave word e retornar lista
-''', (tester) async {
+''', () async {
     final words = [
       'Aarão',
       'Abel',
@@ -41,11 +41,11 @@ Então deve acessar lista de palavras na chave word e retornar lista
 
     expect(result.length, words.length);
   });
-  testWidgets('''
+  test('''
 Dado a requisiçao das palavras na API
 Quando a API retornar um Map vazio
 Então deve lançar um DatasourceError
-''', (tester) async {
+''', () async {
     var response = HttpResponse(statusCode: 200, data: {});
 
     when(httpClient.get(any)).thenAnswer((_) async => response);
@@ -55,11 +55,11 @@ Então deve lançar um DatasourceError
     expect(result, throwsA(isA<DatasourceError>()));
   });
 
-  testWidgets('''
+  test('''
 Dado a requisiçao das palavras na API
 Quando a API retornar null
 Então deve lançar um DatasourceError
-''', (tester) async {
+''', () async {
     var response = HttpResponse(statusCode: 200, data: null);
 
     when(httpClient.get(any)).thenAnswer((_) async => response);
@@ -69,11 +69,11 @@ Então deve lançar um DatasourceError
     expect(result, throwsA(isA<DatasourceError>()));
   });
 
-  testWidgets('''
+  test('''
 Dado a requisiçao das palavras na API
 Quando a requisiçao da API der erro
 Então deve lançar um DatasourceError
-''', (tester) async {
+''', () async {
     when(httpClient.get(any)).thenThrow(HttpClientError(
       data: {},
       statusCode: 500,

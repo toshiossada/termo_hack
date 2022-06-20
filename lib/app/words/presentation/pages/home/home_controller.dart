@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../../domain/usecases/filter_words_usecase.dart';
 
-import '../../../../commons/adapters/custom_alerts/dialog_adapter_interface.dart';
+import '../../../../commons/adapters/custom_alerts/dialog_adapter.dart';
+import '../../../../commons/extensions/match_letter_extension.dart';
+import '../../../domain/usecases/filter_words_usecase.dart';
 import '../../../domain/usecases/search_words_usecase.dart';
 import '../../stores/words_store.dart';
 import 'home_store.dart';
@@ -37,14 +38,16 @@ class HomeController {
     load();
   }
 
-  showWhitelist() async {
-    await Modular.to.pushNamed('/whitelist');
-    load();
+  showWhitelist() {
+    Modular.to.pushNamed('/whitelist').then((_) {
+      load();
+    });
   }
 
-  showBlacklist() async {
-    await Modular.to.pushNamed('/blacklist');
-    load();
+  showBlacklist() {
+    Modular.to.pushNamed('/blacklist').then((_) {
+      load();
+    });
   }
 
   clear() {
@@ -74,7 +77,7 @@ class HomeController {
   }
 
   changeLetter(String? letter, int position) {
-    wordStore.changeLetter(letter ?? '', position);
+    wordStore.changeLetter(letter?.formatWord() ?? '', position);
     load();
   }
 

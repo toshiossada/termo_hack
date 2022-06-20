@@ -32,6 +32,8 @@ class _WhiteListPageState extends State<WhiteListPage> {
           TextField(
             controller: controller.txtLetter,
             onSubmitted: (v) => controller.addLetter(),
+            autofocus: true,
+            focusNode: controller.myFocusNode,
             decoration: const InputDecoration(
               hintText: 'Digite a letra que a palavra contém',
               border: OutlineInputBorder(),
@@ -71,7 +73,7 @@ class _WhiteListPageState extends State<WhiteListPage> {
   @override
   void dispose() {
     super.dispose();
-
+    controller.myFocusNode.dispose();
     Modular.dispose<WhiteListController>();
   }
 }

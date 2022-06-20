@@ -1,31 +1,35 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../../commons/adapters/custom_alerts/dialog_adapter_interface.dart';
+import '../../../../commons/adapters/custom_alerts/dialog_adapter.dart';
+import '../../../../commons/extensions/match_letter_extension.dart';
 import '../../stores/words_store.dart';
 
 class BlackListController {
   final txtLetter = TextEditingController();
   final WordsStore wordStore;
   final IDialogAdapter dialog;
+  final myFocusNode = FocusNode();
 
   BlackListController({
     required this.wordStore,
     required this.dialog,
   });
 
-  remove(String letter) => wordStore.removeBlackList(letter);
+  remove(String letter) => wordStore.removeBlackList(letter.formatWord());
+
   addLetter() {
     if (txtLetter.text.trim().isEmpty) return;
 
     if (wordStore.value.blackList.any(
-        (element) => element.toUpperCase() == txtLetter.text.toUpperCase())) {
+        (element) => element.formatWord() == txtLetter.text.formatWord())) {
       dialog.alertSnackBar('Letra ja esta na blacklist');
       txtLetter.clear();
+      myFocusNode.requestFocus();
       return;
     }
     if (txtLetter.text.isNotEmpty) {
       for (var e in txtLetter.text.runes) {
-        var character = String.fromCharCode(e).toUpperCase().trim();
+        var character = String.fromCharCode(e).formatWord();
         if (character.isEmpty) return;
         if (!letterNotInWord(character)) {
           dialog.alertSnackBar('Letra $character! ja esta na palavra');
@@ -36,20 +40,21 @@ class BlackListController {
           continue;
         }
 
-        if (!wordStore.value.blackList.any((element) =>
-            element.toUpperCase() == txtLetter.text.toUpperCase())) {
+        if (!wordStore.value.blackList.any(
+            (element) => element.formatWord() == txtLetter.text.formatWord())) {
           wordStore.addBlackList(character);
         }
       }
 
       txtLetter.clear();
+      myFocusNode.requestFocus();
     }
   }
 
   bool letterNotInWord(String letter) =>
-      wordStore.value.word.firstLetter.toUpperCase() != letter.toUpperCase() &&
-      wordStore.value.word.secondLetter.toUpperCase() != letter.toUpperCase() &&
-      wordStore.value.word.thirdLetter.toUpperCase() != letter.toUpperCase() &&
-      wordStore.value.word.fourthLetter.toUpperCase() != letter.toUpperCase() &&
-      wordStore.value.word.fifthLetter.toUpperCase() != letter.toUpperCase();
+      wordStore.value.word.firstLetter.formatWord() != letter.formatWord() &&
+      wordStore.value.word.secondLetter.formatWord() != letter.formatWord() &&
+      wordStore.value.word.thirdLetter.formatWord() != letter.formatWord() &&
+      wordStore.value.word.fourthLetter.formatWord() != letter.formatWord() &&
+      wordStore.value.word.fifthLetter.formatWord() != letter.formatWord();
 }

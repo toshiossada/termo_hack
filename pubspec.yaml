@@ -34,6 +34,7 @@ dev_dependencies:
   mockito: ^5.2.0
   build_runner: ^2.1.11
   dart_code_metrics: ^4.15.2
+  modular_test: ^2.0.0
 
 flutter:
   uses-material-design: true

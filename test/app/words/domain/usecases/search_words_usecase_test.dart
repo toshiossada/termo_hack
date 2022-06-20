@@ -22,13 +22,13 @@ void main() {
     );
   });
 
-  testWidgets(
+  test(
       '''
 Dado a requisiçao de procura de palavras
 Quando o repository me retornar palavras com acentos
 Então deve retornar uma lista de palavras sem acentos e maiusculas
 ''',
-      (tester) async {
+      () async {
     final listWords = [
       'amigo',
       'animal',
@@ -54,13 +54,13 @@ Então deve retornar uma lista de palavras sem acentos e maiusculas
     expect(result.any((element) => element == 'melão'.formatWord()), true);
   });
 
-  testWidgets(
+  test(
       '''
 Dado a requisiçao de procura de palavras
 Quando o repository me retornar palavras 3 palavras repetidas
 Então deve retornar uma lista de palavras sem palavras repetidas
 ''',
-      (tester) async {
+      () async {
     final listWords = [
       'amigo',
       'amigo',

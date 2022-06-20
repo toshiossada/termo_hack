@@ -33,6 +33,8 @@ class _BlackListPageState extends State<BlacListPage> {
           TextField(
             controller: controller.txtLetter,
             onSubmitted: (v) => controller.addLetter(),
+            autofocus: true,
+            focusNode: controller.myFocusNode,
             decoration: const InputDecoration(
               hintText: 'Digite a letra que a palavra contém',
               border: OutlineInputBorder(),
@@ -72,7 +74,7 @@ class _BlackListPageState extends State<BlacListPage> {
   @override
   void dispose() {
     super.dispose();
-
+    controller.myFocusNode.dispose();
     Modular.dispose<WhiteListController>();
   }
 }
