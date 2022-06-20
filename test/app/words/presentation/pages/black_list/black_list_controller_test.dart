@@ -21,7 +21,7 @@ void main() {
     );
   });
 
-  group('Add whitelist', () {
+  group('Add blacklist', () {
     test(
         '''
 Dado o texto D,A,D,O
@@ -35,6 +35,25 @@ Então deve adicionar na blacklist as letras DAO
 
       expect(wordStore.value.blackList.length == 3, true);
       expect(wordStore.value.blackList.any((e) => e == 'D'), true);
+      expect(wordStore.value.blackList.any((e) => e == 'A'), true);
+      expect(wordStore.value.blackList.any((e) => e == 'O'), true);
+    });
+    test(
+        '''
+Dado o texto D,A,D,O
+Quando a blacklistfor vazia
+E a whitelist for vazia
+E a primeira letra da palavra for D
+Então deve adicionar na blacklist as letras DAO
+''',
+        () async {
+      wordStore.changeLetter('D', 1);
+      controller.txtLetter.value = const TextEditingValue(text: 'dado');
+      controller.addLetter();
+
+      verify(dialogAdapter.alertSnackBar(any)).called(2);
+      expect(wordStore.value.blackList.length == 2, true);
+      expect(wordStore.value.blackList.any((e) => e == 'D'), false);
       expect(wordStore.value.blackList.any((e) => e == 'A'), true);
       expect(wordStore.value.blackList.any((e) => e == 'O'), true);
     });
