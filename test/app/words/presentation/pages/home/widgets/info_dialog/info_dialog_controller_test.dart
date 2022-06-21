@@ -14,7 +14,11 @@ void main() {
   setUpAll(() {
     controller = InfoDialogController(launchUrlAdapter: launch);
   });
-  test('email', () async {
+  test('''
+Dado a inicializaçao da controller
+Quando o usuario solicitar a abertura do link de email
+Então deve abrir chamar a funçao openEmail do launch
+''', () async {
     when(launch.sendEmail(
       email: controller.email,
       subject: anyNamed('subject'),
@@ -26,7 +30,11 @@ void main() {
       subject: anyNamed('subject'),
     ));
   });
-  test('github', () async {
+  test('''
+Dado a inicializaçao da controller
+Quando o usuario solicitar a abertura do link de Github
+Então deve abrir chamar a funçao openUrl do launch
+''', () async {
     when(launch.openUrl(controller.gitHub)).thenAnswer((_) async => true);
     await controller.openGithub();
 

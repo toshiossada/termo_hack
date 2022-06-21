@@ -2,7 +2,6 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 
 import '../../../commons/extensions/match_letter_extension.dart';
-import '../../domain/entities/word_entity.dart';
 import '../viewmodels/words_view_model.dart';
 
 class WordsStore extends ValueNotifier<WordsViewModel> {
@@ -48,8 +47,6 @@ class WordsStore extends ValueNotifier<WordsViewModel> {
 
     value = value.copyWith(whiteList: list);
   }
-
-  setWord(WordEntity newValue) => value = value.copyWith(word: newValue);
 
   changeLetter(String letter, int position) {
     var word = value.word;

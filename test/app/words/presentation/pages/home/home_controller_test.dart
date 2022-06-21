@@ -33,13 +33,11 @@ void main() {
     );
     Modular.navigatorDelegate = navigate;
   });
-  test(
-      '''
+  test('''
 Dado a inicialização do controller
 Quando a api retornar uma lista de palavras
 Então o store deve receber as palavras com 5 letras
-''',
-      () async {
+''', () async {
     final words = [
       'amigo',
       'animal',
@@ -68,6 +66,9 @@ Então o store deve receber as palavras com 5 letras
   });
 
   test('''
+Dado a a primeira letra estiver setada com A
+Quando mudar a primera letra para O
+Então a store deve estar com a primeira letra com O
 ''', () {
     when(filterWordsUsecase(
       words: anyNamed('words'),
@@ -101,7 +102,9 @@ Então o store deve receber as palavras com 5 letras
   });
 
   test('''
-
+Dado que todas as letras estão preenchidas
+Quando chamar a funçao de limpar
+Deve deixar todas as letras vazias
 ''', () async {
     when(filterWordsUsecase(
       words: anyNamed('words'),
@@ -130,7 +133,9 @@ Então o store deve receber as palavras com 5 letras
   });
 
   test('''
-
+Dado a inicialização do controller
+Quando chamar a funçao showBlacklist
+Deve navegar para a rota /blacklist
 ''', () async {
     when(navigate.pushNamed('/blacklist')).thenAnswer((_) async {
       return null;
@@ -154,7 +159,9 @@ Então o store deve receber as palavras com 5 letras
   });
 
   test('''
-
+Dado a inicialização do controller
+Quando chamar a funçao showWhitelist
+Deve navegar para a rota /whitelist
 ''', () async {
     when(navigate.pushNamed('/whitelist')).thenAnswer((_) async {
       return null;
@@ -177,11 +184,10 @@ Então o store deve receber as palavras com 5 letras
     ));
   });
   test('''
-
+Dado a inicialização do controller
+Quando chamar a funçao showInfo
+Deve chamar o showDialog do dialogAdapter
 ''', () async {
-    when(navigate.pushNamed('/whitelist')).thenAnswer((_) async {
-      return null;
-    });
     when(dialogAdapter.showDialog(any));
 
     await controller.showInfo();
