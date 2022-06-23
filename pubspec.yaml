@@ -29,13 +29,15 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
 
   flutter_lints: ^2.0.0
   mockito: ^5.2.0
   build_runner: ^2.1.11
   dart_code_metrics: ^4.15.2
   modular_test: ^2.0.0
-
+  golden_toolkit: ^0.13.0
 
 flutter:
   uses-material-design: true

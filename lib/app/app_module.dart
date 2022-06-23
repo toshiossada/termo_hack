@@ -7,19 +7,21 @@ import 'commons/adapters/custom_alerts/launch_url/launch_url_adapter.dart';
 import 'commons/adapters/http_client/dio/dio_adapter.dart';
 import 'commons/adapters/http_client/dio/interceptors/dio_interceptor.dart';
 import 'commons/adapters/http_client/http_client_adapter.dart';
-import 'words/words_module.dart';
+import 'modules/words/words_module.dart';
 import 'package:asuka/asuka.dart' as asuka;
 
 class AppModule extends Module {
   @override
   final List<Bind> binds = [
+    Bind.factory<FShowDialog>((i) => (Widget child) {
+          asuka.showDialog(builder: (context) => child);
+        }),
+    Bind.factory<FAlert>((i) => (String text) {
+          asuka.AsukaSnackbar.alert(text).show();
+        }),
     Bind.factory<IDialogAdapter>((i) => AsukaDialog(
-          fShowDialog: (Widget child) {
-            asuka.showDialog(builder: (context) => child);
-          },
-          fAlert: (String text) {
-            asuka.AsukaSnackbar.alert(text).show();
-          },
+          fShowDialog: i<FShowDialog>(),
+          fAlert: i<FAlert>(),
         )),
     Bind.factory((i) => LaunchUrlAdapter()),
     Bind.factory((i) => Dio()),

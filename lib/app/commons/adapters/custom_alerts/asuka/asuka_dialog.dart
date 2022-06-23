@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../dialog_adapter.dart';
 
-typedef ShowDialog = void Function(Widget);
-typedef Alert = void Function(String);
+typedef FShowDialog = void Function(Widget);
+typedef FAlert = void Function(String);
 
 class AsukaDialog implements IDialogAdapter {
-  final ShowDialog fShowDialog;
-  final Alert fAlert;
+  final FShowDialog fShowDialog;
+  final FAlert fAlert;
 
   AsukaDialog({
     required this.fShowDialog,
