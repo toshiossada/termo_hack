@@ -1,7 +1,10 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'presentation/pages/letters_position/letter_position_controller.dart';
+import 'presentation/pages/letters_position/letter_position_page.dart';
 import 'data/external/datasources/word_datasource.dart';
 import 'data/infra/datasources/word_datasource_interface.dart';
 import 'domain/usecases/build_plural_word_usecase.dart';
+import 'domain/usecases/filter_position_letters_usecase.dart';
 import 'domain/usecases/filter_words_usecase.dart';
 import 'presentation/pages/black_list/black_list_controller.dart';
 import 'data/infra/repositories/word_repository.dart';
@@ -22,13 +25,16 @@ class WordsModule extends Module {
         Bind.lazySingleton((i) => WordsStore()),
         Bind.lazySingleton((i) => HomeStore()),
         Bind.factory((i) => InfoDialogController(launchUrlAdapter: i())),
+        Bind.factory((i) => LetterPositionController(wordStore: i())),
         Bind.factory((i) => HomeController(
               wordStore: i(),
               searchWordsUsecase: i(),
               dialog: i(),
               store: i(),
               filterWordsUsecase: i(),
+              filterPositionLettersUsecase: i(),
             )),
+        Bind.factory((i) => FilterPositionLettersUsecase()),
         Bind.factory((i) => FilterWordsUsecase()),
         Bind.factory((i) => WhiteListController(
               wordStore: i(),
@@ -53,5 +59,7 @@ class WordsModule extends Module {
         ChildRoute('/', child: (_, args) => const HomePage()),
         ChildRoute('/whitelist', child: (_, args) => const WhiteListPage()),
         ChildRoute('/blacklist', child: (_, args) => const BlacListPage()),
+        ChildRoute('/position',
+            child: (_, args) => const LetterPositiontPage()),
       ];
 }

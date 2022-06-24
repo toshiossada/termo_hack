@@ -43,6 +43,18 @@ class _HomePageState extends State<HomePage> {
             valueListenable: controller.wordStore,
             builder: (context, value, _) {
               return ActionWidget(
+                color: Colors.orange,
+                count: value.word.notPositionLetter.length,
+                onPressed: controller.showPositionLetter,
+                paddingLeft: 20,
+                icon: Icons.warning_amber,
+              );
+            },
+          ),
+          ValueListenableBuilder<WordsViewModel>(
+            valueListenable: controller.wordStore,
+            builder: (context, value, _) {
+              return ActionWidget(
                 color: Colors.red,
                 count: value.blackList.length,
                 onPressed: controller.showBlacklist,

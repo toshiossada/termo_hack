@@ -20,7 +20,10 @@ class LetterInputWidget extends StatelessWidget {
         child: TextField(
           controller: controller,
           maxLength: 1,
-          onChanged: onChanged,
+          onChanged: (v) {
+            if (onChanged != null) onChanged!(v);
+            FocusScope.of(context).nextFocus();
+          },
           textInputAction: inputAction ?? TextInputAction.next,
           decoration: const InputDecoration(
             counterText: '',

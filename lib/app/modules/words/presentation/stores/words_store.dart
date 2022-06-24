@@ -12,6 +12,16 @@ class WordsStore extends ValueNotifier<WordsViewModel> {
 
   loadWords(List<String> newWords) => value = value.copyWith(words: newWords);
 
+  addPosition(String letter, int position) {
+    final word = value.word.addNotPositionLetter(position, letter);
+    value = value.copyWith(word: word);
+  }
+
+  removeNotPositionLetter(String letter, int position) {
+    final word = value.word.removeNotPositionLetter(position, letter);
+    value = value.copyWith(word: word);
+  }
+
   addBlackList(String letter) {
     final formatLetter = letter.formatWord();
     var list = List<String>.from(value.blackList);

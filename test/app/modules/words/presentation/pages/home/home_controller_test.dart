@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:termo/app/commons/adapters/custom_alerts/dialog_adapter.dart';
+import 'package:termo/app/modules/words/domain/usecases/filter_position_letters_usecase.dart';
 import 'package:termo/app/modules/words/domain/usecases/filter_words_usecase.dart';
 import 'package:termo/app/modules/words/domain/usecases/search_words_usecase.dart';
 import 'package:termo/app/modules/words/presentation/pages/home/home_controller.dart';
@@ -10,13 +11,19 @@ import 'package:termo/app/modules/words/presentation/pages/home/home_store.dart'
 import 'package:termo/app/modules/words/presentation/stores/words_store.dart';
 import 'home_controller_test.mocks.dart';
 
-@GenerateMocks(
-    [SearchWordsUsecase, FilterWordsUsecase, IDialogAdapter, IModularNavigator])
+@GenerateMocks([
+  SearchWordsUsecase,
+  FilterWordsUsecase,
+  IDialogAdapter,
+  IModularNavigator,
+  FilterPositionLettersUsecase,
+])
 void main() {
   var homeStore = HomeStore();
   var wordStore = WordsStore();
   final searchWordsUsecase = MockSearchWordsUsecase();
   final filterWordsUsecase = MockFilterWordsUsecase();
+  final filterPositionLettersUsecase = MockFilterPositionLettersUsecase();
   final dialogAdapter = MockIDialogAdapter();
   final navigate = MockIModularNavigator();
   late HomeController controller;
@@ -30,27 +37,35 @@ void main() {
       dialog: dialogAdapter,
       store: homeStore,
       wordStore: wordStore,
+      filterPositionLettersUsecase: filterPositionLettersUsecase,
     );
     Modular.navigatorDelegate = navigate;
   });
-  test('''
+  test(
+      '''
 Dado a inicialização do controller
 Quando a api retornar uma lista de palavras
 Então o store deve receber as palavras com 5 letras
-''', () async {
+''',
+      () async {
     final words = [
       'amigo',
       'animal',
       'azuis',
     ];
+
+    final resultWords = words.where((element) => element.length == 5).toList();
     when(searchWordsUsecase()).thenAnswer((_) async => words);
+    when(filterPositionLettersUsecase(
+      wordEntity: anyNamed('wordEntity'),
+      words: anyNamed('words'),
+    )).thenAnswer((_) => resultWords);
     when(filterWordsUsecase(
       words: words,
       blackList: anyNamed('blackList'),
       whiteList: anyNamed('whiteList'),
       wordEntity: anyNamed('wordEntity'),
-    )).thenAnswer(
-        (_) => words.where((element) => element.length == 5).toList());
+    )).thenAnswer((_) => resultWords);
     await controller.init();
 
     verify(searchWordsUsecase());
@@ -60,21 +75,30 @@ Então o store deve receber as palavras com 5 letras
       whiteList: anyNamed('whiteList'),
       wordEntity: anyNamed('wordEntity'),
     ));
-    expect(wordStore.value.words,
-        words.where((element) => element.length == 5).toList());
+    verify(filterPositionLettersUsecase(
+      wordEntity: anyNamed('wordEntity'),
+      words: anyNamed('words'),
+    ));
+    expect(wordStore.value.words, resultWords);
     expect(wordStore.value.loading, false);
   });
 
-  test('''
+  test(
+      '''
 Dado a a primeira letra estiver setada com A
 Quando mudar a primera letra para O
 Então a store deve estar com a primeira letra com O
-''', () {
+''',
+      () {
     when(filterWordsUsecase(
       words: anyNamed('words'),
       blackList: anyNamed('blackList'),
       whiteList: anyNamed('whiteList'),
       wordEntity: anyNamed('wordEntity'),
+    )).thenAnswer((_) => []);
+    when(filterPositionLettersUsecase(
+      wordEntity: anyNamed('wordEntity'),
+      words: anyNamed('words'),
     )).thenAnswer((_) => []);
     const first = 'a';
     const second = 'B';
@@ -99,18 +123,28 @@ Então a store deve estar com a primeira letra com O
       whiteList: anyNamed('whiteList'),
       wordEntity: anyNamed('wordEntity'),
     ));
+    verify(filterPositionLettersUsecase(
+      wordEntity: anyNamed('wordEntity'),
+      words: anyNamed('words'),
+    ));
   });
 
-  test('''
+  test(
+      '''
 Dado que todas as letras estão preenchidas
 Quando chamar a funçao de limpar
 Deve deixar todas as letras vazias
-''', () async {
+''',
+      () async {
     when(filterWordsUsecase(
       words: anyNamed('words'),
       blackList: anyNamed('blackList'),
       whiteList: anyNamed('whiteList'),
       wordEntity: anyNamed('wordEntity'),
+    )).thenAnswer((_) => []);
+    when(filterPositionLettersUsecase(
+      wordEntity: anyNamed('wordEntity'),
+      words: anyNamed('words'),
     )).thenAnswer((_) => []);
     controller.changeLetter('a', 1);
     controller.changeLetter('a', 2);
@@ -125,6 +159,10 @@ Deve deixar todas as letras vazias
       whiteList: anyNamed('whiteList'),
       wordEntity: anyNamed('wordEntity'),
     ));
+    verify(filterPositionLettersUsecase(
+      wordEntity: anyNamed('wordEntity'),
+      words: anyNamed('words'),
+    ));
     expect(wordStore.value.word.firstLetter.isEmpty, true);
     expect(wordStore.value.word.secondLetter.isEmpty, true);
     expect(wordStore.value.word.thirdLetter.isEmpty, true);
@@ -132,11 +170,13 @@ Deve deixar todas as letras vazias
     expect(wordStore.value.word.fifthLetter.isEmpty, true);
   });
 
-  test('''
+  test(
+      '''
 Dado a inicialização do controller
 Quando chamar a funçao showBlacklist
 Deve navegar para a rota /blacklist
-''', () async {
+''',
+      () async {
     when(navigate.pushNamed('/blacklist')).thenAnswer((_) async {
       return null;
     });
@@ -145,6 +185,10 @@ Deve navegar para a rota /blacklist
       blackList: anyNamed('blackList'),
       whiteList: anyNamed('whiteList'),
       wordEntity: anyNamed('wordEntity'),
+    )).thenAnswer((_) => []);
+    when(filterPositionLettersUsecase(
+      wordEntity: anyNamed('wordEntity'),
+      words: anyNamed('words'),
     )).thenAnswer((_) => []);
 
     await controller.showBlacklist();
@@ -156,13 +200,19 @@ Deve navegar para a rota /blacklist
       whiteList: anyNamed('whiteList'),
       wordEntity: anyNamed('wordEntity'),
     ));
+    verify(filterPositionLettersUsecase(
+      wordEntity: anyNamed('wordEntity'),
+      words: anyNamed('words'),
+    ));
   });
 
-  test('''
+  test(
+      '''
 Dado a inicialização do controller
 Quando chamar a funçao showWhitelist
 Deve navegar para a rota /whitelist
-''', () async {
+''',
+      () async {
     when(navigate.pushNamed('/whitelist')).thenAnswer((_) async {
       return null;
     });
@@ -171,6 +221,10 @@ Deve navegar para a rota /whitelist
       blackList: anyNamed('blackList'),
       whiteList: anyNamed('whiteList'),
       wordEntity: anyNamed('wordEntity'),
+    )).thenAnswer((_) => []);
+    when(filterPositionLettersUsecase(
+      wordEntity: anyNamed('wordEntity'),
+      words: anyNamed('words'),
     )).thenAnswer((_) => []);
 
     await controller.showWhitelist();
@@ -182,12 +236,18 @@ Deve navegar para a rota /whitelist
       whiteList: anyNamed('whiteList'),
       wordEntity: anyNamed('wordEntity'),
     ));
+    verify(filterPositionLettersUsecase(
+      wordEntity: anyNamed('wordEntity'),
+      words: anyNamed('words'),
+    ));
   });
-  test('''
+  test(
+      '''
 Dado a inicialização do controller
 Quando chamar a funçao showInfo
 Deve chamar o showDialog do dialogAdapter
-''', () async {
+''',
+      () async {
     when(dialogAdapter.showDialog(any));
 
     await controller.showInfo();
