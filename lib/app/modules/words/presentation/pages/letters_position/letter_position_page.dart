@@ -33,6 +33,7 @@ class _LetterPositiontPageState extends State<LetterPositiontPage> {
             children: [
               Flexible(
                 child: TextField(
+                  maxLength: 1,
                   controller: controller.txtLetter,
                   onSubmitted: (v) => controller.addLetter(),
                   autofocus: true,
@@ -44,26 +45,29 @@ class _LetterPositiontPageState extends State<LetterPositiontPage> {
                   ),
                 ),
               ),
-              DropdownButton<int>(
-                value: controller.dropdownValue,
-                icon: const Icon(Icons.arrow_downward),
-                elevation: 16,
-                style: const TextStyle(color: Colors.deepPurple),
-                underline: Container(
-                  height: 2,
-                  color: Colors.deepPurpleAccent,
+              Flexible(
+                child: DropdownButton<int>(
+                  value: controller.dropdownValue,
+                  icon: const Icon(Icons.arrow_downward),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (int? newValue) {
+                    setState(() {
+                      controller.dropdownValue = newValue!;
+                    });
+                  },
+                  items:
+                      [1, 2, 3, 4, 5].map<DropdownMenuItem<int>>((int value) {
+                    return DropdownMenuItem<int>(
+                      value: value,
+                      child: Text(value.toString()),
+                    );
+                  }).toList(),
                 ),
-                onChanged: (int? newValue) {
-                  setState(() {
-                    controller.dropdownValue = newValue!;
-                  });
-                },
-                items: [1, 2, 3, 4, 5].map<DropdownMenuItem<int>>((int value) {
-                  return DropdownMenuItem<int>(
-                    value: value,
-                    child: Text(value.toString()),
-                  );
-                }).toList(),
               )
             ],
           ),
