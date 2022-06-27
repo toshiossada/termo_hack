@@ -32,11 +32,13 @@ class BlackListController {
         var character = String.fromCharCode(e).formatWord();
         if (character.isEmpty) return;
         if (!letterNotInWord(character)) {
-          dialog.alertSnackBar('Letra $character! ja esta na palavra');
           continue;
         }
         if (wordStore.value.whiteList.any((element) => element == character)) {
-          dialog.alertSnackBar('Letra $character! ja esta na whitelist');
+          continue;
+        }
+        if (wordStore.value.word.notPositionLetter
+            .any((element) => element.letter == character)) {
           continue;
         }
 

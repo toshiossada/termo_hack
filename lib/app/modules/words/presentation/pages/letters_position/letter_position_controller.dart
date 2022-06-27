@@ -14,7 +14,7 @@ class LetterPositionController {
   });
 
   remove(String letter, int position) =>
-      wordStore.removeNotPositionLetter(txtLetter.text, position);
+      wordStore.removeNotPositionLetter(letter, position);
 
   addLetter() {
     if (txtLetter.text.trim().isEmpty) return;

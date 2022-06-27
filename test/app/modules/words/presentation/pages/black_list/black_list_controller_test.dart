@@ -51,7 +51,6 @@ Então deve adicionar na blacklist as letras DAO
       controller.txtLetter.value = const TextEditingValue(text: 'dado');
       controller.addLetter();
 
-      verify(dialogAdapter.alertSnackBar(any)).called(2);
       expect(wordStore.value.blackList.length == 2, true);
       expect(wordStore.value.blackList.any((e) => e == 'D'), false);
       expect(wordStore.value.blackList.any((e) => e == 'A'), true);
@@ -103,7 +102,6 @@ Dado o texto D,A,D,O
 Quando a blacklist for vazia
 E a whitelist tiver a letra D
 Então deve adicionar na blacklist as letras AO
-E deve emitir um alerta duas vezes
 ''',
         () async {
       when(dialogAdapter.alertSnackBar(any)).thenAnswer((_) {});
@@ -112,11 +110,29 @@ E deve emitir um alerta duas vezes
       controller.addLetter();
 
       expect(wordStore.value.blackList.length == 2, true);
-      verify(dialogAdapter.alertSnackBar(any)).called(2);
       expect(wordStore.value.blackList.any((e) => e == 'D'), false);
       expect(wordStore.value.blackList.any((e) => e == 'A'), true);
       expect(wordStore.value.blackList.any((e) => e == 'O'), true);
     });
+  });
+
+  test(
+      '''
+Dado o texto D,A,D,O
+Quando a blacklist for vazia
+E a lista de letras na posiçao tiver a letra D
+Então deve adicionar na blacklist as letras AO
+''',
+      () async {
+    when(dialogAdapter.alertSnackBar(any)).thenAnswer((_) {});
+    wordStore.addPosition('D', 1);
+    controller.txtLetter.value = const TextEditingValue(text: 'dado');
+    controller.addLetter();
+
+    expect(wordStore.value.blackList.length == 2, true);
+    expect(wordStore.value.blackList.any((e) => e == 'D'), false);
+    expect(wordStore.value.blackList.any((e) => e == 'A'), true);
+    expect(wordStore.value.blackList.any((e) => e == 'O'), true);
   });
 
   test(
