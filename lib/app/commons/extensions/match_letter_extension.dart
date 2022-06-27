@@ -3,13 +3,10 @@ import 'package:diacritic/diacritic.dart';
 extension MatchLetterExtension on String {
   String formatWord() => removeDiacritics(toUpperCase()).trim();
 
-  bool matchLetter({
-    required String letter,
-    required int position,
-  }) {
-    return letter.isEmpty ||
-        substring(position - 1, position).formatWord() == letter.toUpperCase();
-  }
+  bool matchWord(
+    String expression,
+  ) =>
+      RegExp('^(${expression.toString()})\$').hasMatch(formatWord());
 
   bool blackListLetter(List<String> blacklist) =>
       blacklist.isEmpty ||
