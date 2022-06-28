@@ -1,4 +1,9 @@
 include: package:flutter_lints/flutter.yaml
+
+# analyzer:
+# plugins:
+#   - dart_code_metrics
+
 dart_code_metrics:
   anti-patterns:
     - long-method
@@ -10,6 +15,7 @@ dart_code_metrics:
     source-lines-of-code: 50
   metrics-exclude:
     - test/**
+    - integration_test/**
   rules:
     - newline-before-return
     - no-boolean-literal-compare
@@ -19,8 +25,8 @@ dart_code_metrics:
     - no-equal-then-else
 linter:
   rules:
-    avoid_print: false
+    newline-before-return: true
+    avoid_print: true
     prefer_single_quotes: true
     prefer_relative_imports: true
     prefer-trailing-comma: true
-    newline-before-return: true

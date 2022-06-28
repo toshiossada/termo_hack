@@ -16,10 +16,12 @@ class WordDatasource implements IWordDatasource {
   Future<List<String>> getWords() async {
     try {
       final response = await _httpClient.get(
-          'https://raw.githubusercontent.com/toshiossada/termo/main/words.json');
+        'https://raw.githubusercontent.com/toshiossada/termo/main/words.json',
+      );
 
       final data = await json.decode(response.data);
       final words = (data['words'] as List).map((e) => e.toString()).toList();
+
       return words;
     } on HttpClientError catch (e) {
       throw DatasourceError(httpError: e, message: e.message);

@@ -10,36 +10,44 @@ import 'package:termo/app/commons/adapters/http_client/http_client_adapter.dart'
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized;
 
-  testWidgets('''
+  testWidgets(
+    '''
 Dado uma lista de palavras
 Quando a página é carregada
 Deve exibir as palavras com 5 caracteres
-''', (tester) async {
-    app.main();
-    await tester.pumpAndSettle();
-    final txtFirst = find.descendant(
+''',
+    (tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+      final txtFirst = find.descendant(
         of: find.byKey(const Key('firstLetter')),
-        matching: find.byType(TextField));
-    final txtSecond = find.descendant(
+        matching: find.byType(TextField),
+      );
+      final txtSecond = find.descendant(
         of: find.byKey(const Key('secondLetter')),
-        matching: find.byType(TextField));
-    final txtThird = find.descendant(
+        matching: find.byType(TextField),
+      );
+      final txtThird = find.descendant(
         of: find.byKey(const Key('thirdLetter')),
-        matching: find.byType(TextField));
-    final txtFourth = find.descendant(
+        matching: find.byType(TextField),
+      );
+      final txtFourth = find.descendant(
         of: find.byKey(const Key('fourthLetter')),
-        matching: find.byType(TextField));
-    final txtFifth = find.descendant(
+        matching: find.byType(TextField),
+      );
+      final txtFifth = find.descendant(
         of: find.byKey(const Key('fifthLetter')),
-        matching: find.byType(TextField));
-    await tester.pumpAndSettle();
+        matching: find.byType(TextField),
+      );
+      await tester.pumpAndSettle();
 
-    expect(txtFirst, findsOneWidget);
-    expect(txtSecond, findsOneWidget);
-    expect(txtThird, findsOneWidget);
-    expect(txtFourth, findsOneWidget);
-    expect(txtFifth, findsOneWidget);
-  });
+      expect(txtFirst, findsOneWidget);
+      expect(txtSecond, findsOneWidget);
+      expect(txtThird, findsOneWidget);
+      expect(txtFourth, findsOneWidget);
+      expect(txtFifth, findsOneWidget);
+    },
+  );
 
   testWidgets('''
 Dado uma lista de palavras

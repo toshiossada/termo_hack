@@ -19,12 +19,16 @@ class CustomInterceptors extends InterceptorsWrapper {
       log(json.encode('BaseURL: ${options.baseUrl}'), name: 'Request[BaseURL]');
       log(json.encode('Endpoint: ${options.path}'), name: 'Request[Endpoint]');
       if (options.headers['access-token'] != null) {
-        log(json.encode('access-token: ${options.headers['access-token']}'),
-            name: 'Request[access-token]');
+        log(
+          json.encode('access-token: ${options.headers['access-token']}'),
+          name: 'Request[access-token]',
+        );
       }
       if (options.data != null) {
-        log(json.encode('Payload: ${json.encode(options.data)}'),
-            name: 'Request[Payload]');
+        log(
+          json.encode('Payload: ${json.encode(options.data)}'),
+          name: 'Request[Payload]',
+        );
       }
     }
     handler.next(options);
@@ -49,24 +53,26 @@ class CustomInterceptors extends InterceptorsWrapper {
     HttpClientError failure;
     if (err.response?.statusCode == 401) {
       failure = HttpClientError(
-          message: 'Falha ao realizar login.',
-          requestOptions: err.requestOptions,
-          statusCode: err.response?.statusCode,
-          stackTrace: err.stackTrace,
-          type: err.type,
-          data: err.requestOptions.data,
-          error: err,
-          response: err.response);
+        message: 'Falha ao realizar login.',
+        requestOptions: err.requestOptions,
+        statusCode: err.response?.statusCode,
+        stackTrace: err.stackTrace,
+        type: err.type,
+        data: err.requestOptions.data,
+        error: err,
+        response: err.response,
+      );
     } else {
       failure = HttpClientError(
-          requestOptions: err.requestOptions,
-          statusCode: err.response?.statusCode,
-          stackTrace: err.stackTrace,
-          type: err.type,
-          data: err.requestOptions.data,
-          error: err,
-          response: err.response,
-          message: 'Ocorreu um erro na requisição com o servidor');
+        requestOptions: err.requestOptions,
+        statusCode: err.response?.statusCode,
+        stackTrace: err.stackTrace,
+        type: err.type,
+        data: err.requestOptions.data,
+        error: err,
+        response: err.response,
+        message: 'Ocorreu um erro na requisição com o servidor',
+      );
     }
 
     handler.next(failure);

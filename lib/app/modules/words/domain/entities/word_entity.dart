@@ -19,6 +19,7 @@ class WordEntity {
             ..add(
                 LetterEnity(position: position, letter: letter.formatWord())));
     }
+
     return null;
   }
 
@@ -27,11 +28,17 @@ class WordEntity {
         element.letter == letter.formatWord() &&
         element.position == position)) {
       return copyWith(
-          notPositionLetter: List.from(notPositionLetter)
-            ..remove(notPositionLetter.firstWhere((element) =>
-                element.letter == letter.formatWord() &&
-                element.position == position)));
+        notPositionLetter: List.from(notPositionLetter)
+          ..remove(
+            notPositionLetter.firstWhere(
+              (element) =>
+                  element.letter == letter.formatWord() &&
+                  element.position == position,
+            ),
+          ),
+      );
     }
+
     return null;
   }
 

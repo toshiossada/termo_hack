@@ -17,9 +17,10 @@ class HttpRequest {
     Map<String, dynamic> headers,
   ) =>
       HttpRequest(
-          method: method,
-          path: path,
-          data: data,
-          queryParameters: queryParameters,
-          headers: headers);
+        method: method,
+        path: path,
+        data: data,
+        queryParameters: queryParameters,
+        headers: headers,
+      );
 }

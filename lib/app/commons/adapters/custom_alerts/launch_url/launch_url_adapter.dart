@@ -7,5 +7,6 @@ class LaunchUrlAdapter {
     String? subject,
   }) =>
       launcher.launchUrl(Uri.parse(
-          'mailto:$email?${subject != null ? 'subject=$subject' : ''}'));
+        'mailto:$email?${subject != null ? 'subject=$subject' : ''}',
+      ));
 }
