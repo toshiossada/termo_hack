@@ -21,7 +21,6 @@ extension MatchLetterExtension on String {
     var result = true;
     for (var element in whiteList) {
       if (!formatWord().contains(element.formatWord())) {
-        if (length < 5 && element == 'S') continue;
         result = false;
         break;
       }
