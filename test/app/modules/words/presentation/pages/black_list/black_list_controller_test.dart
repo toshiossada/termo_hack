@@ -22,14 +22,12 @@ void main() {
   });
 
   group('Add blacklist', () {
-    test(
-        '''
+    test('''
 Dado o texto D,A,D,O
 Quando a blacklistfor vazia
 E a whitelist for vazia
 Então deve adicionar na blacklist as letras DAO
-''',
-        () async {
+''', () async {
       controller.txtLetter.value = const TextEditingValue(text: 'dado');
       controller.addLetter();
 
@@ -38,15 +36,13 @@ Então deve adicionar na blacklist as letras DAO
       expect(wordStore.value.blackList.any((e) => e == 'A'), true);
       expect(wordStore.value.blackList.any((e) => e == 'O'), true);
     });
-    test(
-        '''
+    test('''
 Dado o texto D,A,D,O
 Quando a blacklistfor vazia
 E a whitelist for vazia
 E a primeira letra da palavra for D
 Então deve adicionar na blacklist as letras DAO
-''',
-        () async {
+''', () async {
       wordStore.changeLetter('D', 1);
       controller.txtLetter.value = const TextEditingValue(text: 'dado');
       controller.addLetter();
@@ -56,30 +52,26 @@ Então deve adicionar na blacklist as letras DAO
       expect(wordStore.value.blackList.any((e) => e == 'A'), true);
       expect(wordStore.value.blackList.any((e) => e == 'O'), true);
     });
-    test(
-        '''
+    test('''
 Dado o texto um espaço vazio
 Quando a blacklistfor for vazia
 E a whitelist for vazia
 Então não deve adicionar nada a blacklistfor
 E ela deve ser vazia
-''',
-        () async {
+''', () async {
       controller.txtLetter.value = const TextEditingValue(text: ' ');
       controller.addLetter();
 
       expect(wordStore.value.blackList.isEmpty, true);
     });
 
-    test(
-        '''
+    test('''
 Dado o texto A
 Quando a blacklistfor possui as letras DAO
 E a whitelist for vazia
 Então deve nào deve adicionar letra
 E deve emitir um alerta uma vez
-''',
-        () async {
+''', () async {
       when(dialogAdapter.alertSnackBar(any)).thenAnswer((_) {});
 
       wordStore.addBlackList('D');
@@ -96,14 +88,12 @@ E deve emitir um alerta uma vez
       expect(wordStore.value.blackList.any((e) => e == 'O'), true);
     });
 
-    test(
-        '''
+    test('''
 Dado o texto D,A,D,O
 Quando a blacklist for vazia
 E a whitelist tiver a letra D
 Então deve adicionar na blacklist as letras AO
-''',
-        () async {
+''', () async {
       when(dialogAdapter.alertSnackBar(any)).thenAnswer((_) {});
       wordStore.addWhiteList('D');
       controller.txtLetter.value = const TextEditingValue(text: 'dado');
@@ -116,14 +106,12 @@ Então deve adicionar na blacklist as letras AO
     });
   });
 
-  test(
-      '''
+  test('''
 Dado o texto D,A,D,O
 Quando a blacklist for vazia
 E a lista de letras na posiçao tiver a letra D
 Então deve adicionar na blacklist as letras AO
-''',
-      () async {
+''', () async {
     when(dialogAdapter.alertSnackBar(any)).thenAnswer((_) {});
     wordStore.addPosition('D', 1);
     controller.txtLetter.value = const TextEditingValue(text: 'dado');
@@ -135,14 +123,12 @@ Então deve adicionar na blacklist as letras AO
     expect(wordStore.value.blackList.any((e) => e == 'O'), true);
   });
 
-  test(
-      '''
+  test('''
 Dado a remoçao da letra O
 Quando a blacklist possuir as letras DAO
 Então deve remover a letra O da lista
 E ficar apenas DA
-''',
-      () async {
+''', () async {
     wordStore.addBlackList('D');
     wordStore.addBlackList('A');
     wordStore.addBlackList('O');

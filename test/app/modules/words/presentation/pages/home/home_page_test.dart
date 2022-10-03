@@ -9,7 +9,7 @@ import 'package:modular_test/modular_test.dart';
 import 'package:termo/app/app_module.dart';
 import 'package:termo/app/commons/adapters/http_client/http_client_adapter.dart';
 import 'package:termo/app/commons/adapters/http_client/http_response.dart';
-import 'package:termo/app/modules/words/presentation/pages/home/home_page.dart';
+import 'package:termo/app/modules/words/presentation/pages/home/home_controller.dart';
 import 'package:termo/app/modules/words/words_module.dart';
 
 import '../../../../../../helpers/make_testable_widget.dart';
@@ -50,14 +50,20 @@ void main() {
     Modular.navigatorDelegate = navigate;
   });
 
-  testWidgets(
-      '''
+  testWidgets('''
 Dado uma lista de palavras
 Quando a página é carregada
 Deve exibir as palavras com 5 caracteres
-''',
-      (tester) async {
-    await tester.pumpWidget(makeTestableWidget(child: const HomePage()));
+''', (tester) async {
+    await tester.pumpWidget(makeTestableWidget(
+        child: HomeController(
+      dialog: Modular.get(),
+      filterPositionLettersUsecase: Modular.get(),
+      filterWordsUsecase: Modular.get(),
+      searchWordsUsecase: Modular.get(),
+      store: Modular.get(),
+      wordStore: Modular.get(),
+    )));
     await tester.pumpAndSettle();
     final txtFirst = find.descendant(
         of: find.byKey(const Key('firstLetter')),
@@ -93,14 +99,20 @@ Deve exibir as palavras com 5 caracteres
     expect(fuzil, findsWidgets);
     expect(funil, findsWidgets);
   });
-  testWidgets(
-      '''
+  testWidgets('''
 Dado uma lista de palavras
 Quando digitado a letra F na primeira caixa de texto
 Deve exibir as palavras FUNIL e FUZIL
-''',
-      (tester) async {
-    await tester.pumpWidget(makeTestableWidget(child: const HomePage()));
+''', (tester) async {
+    await tester.pumpWidget(makeTestableWidget(
+        child: HomeController(
+      dialog: Modular.get(),
+      filterPositionLettersUsecase: Modular.get(),
+      filterWordsUsecase: Modular.get(),
+      searchWordsUsecase: Modular.get(),
+      store: Modular.get(),
+      wordStore: Modular.get(),
+    )));
     await tester.pumpAndSettle();
     final txtFirst = find.descendant(
         of: find.byKey(const Key('firstLetter')),
@@ -123,15 +135,21 @@ Deve exibir as palavras FUNIL e FUZIL
     expect(fuzil, findsWidgets);
     expect(funil, findsWidgets);
   });
-  testWidgets(
-      '''
+  testWidgets('''
 Dado uma lista de palavras
 Quando limpar a tela
 E digitado a letra E na segunda caixa de texto
 Deve exibir as palavra MELAO
-''',
-      (tester) async {
-    await tester.pumpWidget(makeTestableWidget(child: const HomePage()));
+''', (tester) async {
+    await tester.pumpWidget(makeTestableWidget(
+        child: HomeController(
+      dialog: Modular.get(),
+      filterPositionLettersUsecase: Modular.get(),
+      filterWordsUsecase: Modular.get(),
+      searchWordsUsecase: Modular.get(),
+      store: Modular.get(),
+      wordStore: Modular.get(),
+    )));
     await tester.pumpAndSettle();
 
     final txtSecond = find.descendant(
@@ -158,15 +176,21 @@ Deve exibir as palavra MELAO
     expect(fuzil, findsNothing);
     expect(funil, findsNothing);
   });
-  testWidgets(
-      '''
+  testWidgets('''
 Dado uma lista de palavras
 Quando limpar a tela
 E digitado as letras FU_IL
 Deve exibir as palavra FUZIL e FUNIL
-''',
-      (tester) async {
-    await tester.pumpWidget(makeTestableWidget(child: const HomePage()));
+''', (tester) async {
+    await tester.pumpWidget(makeTestableWidget(
+        child: HomeController(
+      dialog: Modular.get(),
+      filterPositionLettersUsecase: Modular.get(),
+      filterWordsUsecase: Modular.get(),
+      searchWordsUsecase: Modular.get(),
+      store: Modular.get(),
+      wordStore: Modular.get(),
+    )));
     await tester.pumpAndSettle();
 
     final txtFirst = find.descendant(
@@ -206,15 +230,21 @@ Deve exibir as palavra FUZIL e FUNIL
     expect(fuzil, findsWidgets);
     expect(funil, findsWidgets);
   });
-  testWidgets(
-      '''
+  testWidgets('''
 Dado uma lista de palavras
 Quando limpar a tela
 E digitado as letras FUZIL
 Deve exibir as palavra FUZIL
-''',
-      (tester) async {
-    await tester.pumpWidget(makeTestableWidget(child: const HomePage()));
+''', (tester) async {
+    await tester.pumpWidget(makeTestableWidget(
+        child: HomeController(
+      dialog: Modular.get(),
+      filterPositionLettersUsecase: Modular.get(),
+      filterWordsUsecase: Modular.get(),
+      searchWordsUsecase: Modular.get(),
+      store: Modular.get(),
+      wordStore: Modular.get(),
+    )));
     await tester.pumpAndSettle();
 
     final txtFirst = find.descendant(

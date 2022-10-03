@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'letter_position_controller.dart';
 
 import '../../viewmodels/words_view_model.dart';
+import 'letter_position_controller.dart';
 
 class LetterPositiontPage extends StatefulWidget {
   const LetterPositiontPage({Key? key}) : super(key: key);
@@ -12,9 +11,9 @@ class LetterPositiontPage extends StatefulWidget {
 }
 
 class _LetterPositiontPageState extends State<LetterPositiontPage> {
-  final controller = Modular.get<LetterPositionController>();
   @override
   Widget build(BuildContext context) {
+    final controller = LetterPositionController.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Black'),
@@ -102,12 +101,5 @@ class _LetterPositiontPageState extends State<LetterPositiontPage> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    controller.myFocusNode.dispose();
-    Modular.dispose<LetterPositionController>();
   }
 }

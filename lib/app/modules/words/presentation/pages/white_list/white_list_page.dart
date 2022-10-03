@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
-import 'white_list_controller.dart';
 import '../../viewmodels/words_view_model.dart';
+import 'white_list_controller.dart';
 
 class WhiteListPage extends StatefulWidget {
   const WhiteListPage({Key? key}) : super(key: key);
@@ -12,9 +11,9 @@ class WhiteListPage extends StatefulWidget {
 }
 
 class _WhiteListPageState extends State<WhiteListPage> {
-  final controller = Modular.get<WhiteListController>();
   @override
   Widget build(BuildContext context) {
+    final controller = WhiteListController.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('WhiteList'),
@@ -68,12 +67,5 @@ class _WhiteListPageState extends State<WhiteListPage> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    controller.myFocusNode.dispose();
-    Modular.dispose<WhiteListController>();
   }
 }

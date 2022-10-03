@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:modular_test/modular_test.dart';
 import 'package:termo/app/app_module.dart';
 import 'package:termo/app/commons/adapters/http_client/http_client_adapter.dart';
 import 'package:termo/app/commons/adapters/http_client/http_response.dart';
-import 'package:termo/app/modules/words/presentation/pages/home/home_page.dart';
+import 'package:termo/app/modules/words/presentation/pages/home/home_controller.dart';
 import 'package:termo/app/modules/words/words_module.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
 
 import 'home_page_golden_test.mocks.dart';
 
@@ -45,11 +45,13 @@ void main() {
     ]);
   });
 
-  testGoldens('''
+  testGoldens(
+      '''
 Dado uma lista de palavras
 Quando a página é carregada
 Deve exibir as palavras com 5 caracteres
-''', (tester) async {
+''',
+      (tester) async {
     final response =
         HttpResponse(statusCode: 200, data: json.encode({'words': words}));
     when(http.get(any)).thenAnswer((_) async => response);
@@ -64,7 +66,14 @@ Deve exibir as palavras com 5 caracteres
       ])
       ..addScenario(
         name: 'Clean Home',
-        widget: const HomePage(),
+        widget: HomeController(
+          dialog: Modular.get(),
+          filterPositionLettersUsecase: Modular.get(),
+          filterWordsUsecase: Modular.get(),
+          searchWordsUsecase: Modular.get(),
+          store: Modular.get(),
+          wordStore: Modular.get(),
+        ),
         onCreate: (scenarioWidgetKey) async {
           await tester.pumpAndSettle();
         },
@@ -73,16 +82,25 @@ Deve exibir as palavras com 5 caracteres
     await screenMatchesGolden(tester, 'homeStarted');
   });
 
-  testGoldens('''
+  testGoldens(
+      '''
 Dado uma lista de palavras
 Quando digitado a letra F na primeira caixa de texto
 Deve exibir as palavras FUNIL e FUZIL
-''', (tester) async {
+''',
+      (tester) async {
     final response =
         HttpResponse(statusCode: 200, data: json.encode({'words': words}));
     when(http.get(any)).thenAnswer((_) async => response);
     await loadAppFonts();
-    const home = HomePage();
+    final home = HomeController(
+      dialog: Modular.get(),
+      filterPositionLettersUsecase: Modular.get(),
+      filterWordsUsecase: Modular.get(),
+      searchWordsUsecase: Modular.get(),
+      store: Modular.get(),
+      wordStore: Modular.get(),
+    );
 
     final builder = DeviceBuilder()
       ..overrideDevicesForAllScenarios(devices: [
@@ -107,5 +125,4 @@ Deve exibir as palavras FUNIL e FUZIL
     await tester.pumpDeviceBuilder(builder);
     await screenMatchesGolden(tester, 'firstLetterF');
   });
-
 }

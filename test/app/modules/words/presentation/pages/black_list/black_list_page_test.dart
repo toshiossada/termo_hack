@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:modular_test/modular_test.dart';
 import 'package:termo/app/app_module.dart';
-import 'package:termo/app/modules/words/presentation/pages/black_list/black_list_page.dart';
+import 'package:termo/app/modules/words/presentation/pages/black_list/black_list_controller.dart';
 import 'package:termo/app/modules/words/words_module.dart';
 
 import '../../../../../../helpers/make_testable_widget.dart';
@@ -15,13 +16,20 @@ void main() {
     ]);
   });
 
-  testWidgets('''
+  testWidgets(
+      '''
 Dado a abertura da tela de blacklist
 Quando o estiver tudo carregado
 Entao deve encontrar o botão de adicionar letra
 E o campo de texto de letra
-''', (tester) async {
-    await tester.pumpWidget(makeTestableWidget(child: const BlacListPage()));
+''',
+      (tester) async {
+    await tester.pumpWidget(makeTestableWidget(
+        child: BlackListController(
+      dialog: Modular.get(),
+      wordStore: Modular.get(),
+    )));
+
     await tester.pumpAndSettle();
 
     final addButton = find.byIcon(Icons.add);
@@ -31,12 +39,18 @@ E o campo de texto de letra
     expect(txtLetter, findsOneWidget);
   });
 
-  testWidgets('''
+  testWidgets(
+      '''
 Dado o texto ABC
 Quando não houver nenhuma letra adicionada anteriormente
 Entao adicionar as letras A, B, C e encontrar na listview
-''', (tester) async {
-    await tester.pumpWidget(makeTestableWidget(child: const BlacListPage()));
+''',
+      (tester) async {
+    await tester.pumpWidget(makeTestableWidget(
+        child: BlackListController(
+      dialog: Modular.get(),
+      wordStore: Modular.get(),
+    )));
     await tester.pumpAndSettle();
 
     final addButton = find.byIcon(Icons.add);
@@ -56,12 +70,18 @@ Entao adicionar as letras A, B, C e encontrar na listview
     expect(c, findsOneWidget);
   });
 
-  testWidgets('''
+  testWidgets(
+      '''
 Dado o texto ABC
 Quando não houver nenhuma letra adicionada anteriormente
 Entao adicionar as letras A, B, C e encontrar na listview
-''', (tester) async {
-    await tester.pumpWidget(makeTestableWidget(child: const BlacListPage()));
+''',
+      (tester) async {
+    await tester.pumpWidget(makeTestableWidget(
+        child: BlackListController(
+      dialog: Modular.get(),
+      wordStore: Modular.get(),
+    )));
     await tester.pumpAndSettle();
 
     final addButton = find.byIcon(Icons.add);
@@ -84,13 +104,19 @@ Entao adicionar as letras A, B, C e encontrar na listview
 
   bool predicateFindbytext(final Widget? widget, String text) =>
       widget is Text && widget.data == text;
-  testWidgets('''
+  testWidgets(
+      '''
 Dado o texto ABC
 Quando as letras ja estiverem na lista
 E apertar o botão para remover a letra A
 Entao deverá remover a letra A da lisa e não encontrar mais na tela
-''', (tester) async {
-    await tester.pumpWidget(makeTestableWidget(child: const BlacListPage()));
+''',
+      (tester) async {
+    await tester.pumpWidget(makeTestableWidget(
+        child: BlackListController(
+      dialog: Modular.get(),
+      wordStore: Modular.get(),
+    )));
     await tester.pumpAndSettle();
 
     final txtLetter = find.byType(TextField);
@@ -120,12 +146,18 @@ Entao deverá remover a letra A da lisa e não encontrar mais na tela
     expect(c, findsOneWidget);
   });
 
-  testWidgets('''
+  testWidgets(
+      '''
 Dado o texto ABC
 Quando tentar adicionar o texto DADA
 Entao deverá adicionar a letra D e encontrar na listview
-''', (tester) async {
-    await tester.pumpWidget(makeTestableWidget(child: const BlacListPage()));
+''',
+      (tester) async {
+    await tester.pumpWidget(makeTestableWidget(
+        child: BlackListController(
+      dialog: Modular.get(),
+      wordStore: Modular.get(),
+    )));
     await tester.pumpAndSettle();
 
     final txtLetter = find.byType(TextField);

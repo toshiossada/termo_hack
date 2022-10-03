@@ -3,17 +3,21 @@ import 'package:flutter/cupertino.dart';
 import '../../../../../commons/adapters/custom_alerts/dialog_adapter.dart';
 import '../../../../../commons/extensions/match_letter_extension.dart';
 import '../../stores/words_store.dart';
+import 'black_list_page.dart';
 
-class BlackListController {
+class BlackListController extends InheritedNotifier {
   final txtLetter = TextEditingController();
   final WordsStore wordStore;
   final IDialogAdapter dialog;
   final myFocusNode = FocusNode();
 
   BlackListController({
+    super.key,
     required this.wordStore,
     required this.dialog,
-  });
+  }) : super(child: const BlacListPage());
+  static BlackListController of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<BlackListController>()!;
 
   remove(String letter) => wordStore.removeBlackList(letter.formatWord());
 

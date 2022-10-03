@@ -12,6 +12,7 @@ scripts:
   check-unused-files: flutter pub run dart_code_metrics:metrics check-unused-files lib > metrics.txt
   analyze: flutter pub run dart_code_metrics:metrics analyze  lib > metrics.txt
   check-unused-code: flutter pub run dart_code_metrics:metrics check-unused-code lib > metrics.txt
+  update-goldens: flutter test --update-goldens
 
 dependencies:
   flutter:

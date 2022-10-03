@@ -7,10 +7,11 @@ import '../../../domain/usecases/filter_position_letters_usecase.dart';
 import '../../../domain/usecases/filter_words_usecase.dart';
 import '../../../domain/usecases/search_words_usecase.dart';
 import '../../stores/words_store.dart';
+import 'home_page.dart';
 import 'home_store.dart';
 import 'widgets/info_dialog/info_dialog_widget.dart';
 
-class HomeController {
+class HomeController extends InheritedNotifier<HomeStore> {
   final txtFirst = TextEditingController();
   final txtSecond = TextEditingController();
   final txtThird = TextEditingController();
@@ -25,6 +26,7 @@ class HomeController {
   final FilterPositionLettersUsecase _filterPositionLettersUsecase;
 
   HomeController({
+    super.key,
     required SearchWordsUsecase searchWordsUsecase,
     required FilterWordsUsecase filterWordsUsecase,
     required IDialogAdapter dialog,
@@ -34,7 +36,11 @@ class HomeController {
   })  : _searchWordsUsecase = searchWordsUsecase,
         _dialog = dialog,
         _filterWordsUsecase = filterWordsUsecase,
-        _filterPositionLettersUsecase = filterPositionLettersUsecase;
+        _filterPositionLettersUsecase = filterPositionLettersUsecase,
+        super(notifier: store, child: const HomePage());
+
+  static HomeController of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<HomeController>()!;
 
   init() async {
     final words = await _searchWordsUsecase();

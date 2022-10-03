@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+
 import '../../viewmodels/words_view_model.dart';
 import 'home_controller.dart';
-
 import 'widgets/action_widget.dart';
 import 'widgets/letter_input_widget.dart';
 
@@ -14,17 +13,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = Modular.get<HomeController>();
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final controller = HomeController.of(context);
       controller.init();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final controller = HomeController.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Termo'),
@@ -145,12 +145,5 @@ class _HomePageState extends State<HomePage> {
         child: const Icon(Icons.cleaning_services_outlined),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-
-    Modular.dispose<HomeController>();
   }
 }

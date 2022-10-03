@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'black_list_controller.dart';
-import '../white_list/white_list_controller.dart';
 
 import '../../viewmodels/words_view_model.dart';
+import 'black_list_controller.dart';
 
 class BlacListPage extends StatefulWidget {
   const BlacListPage({Key? key}) : super(key: key);
@@ -13,9 +11,9 @@ class BlacListPage extends StatefulWidget {
 }
 
 class _BlackListPageState extends State<BlacListPage> {
-  final controller = Modular.get<BlackListController>();
   @override
   Widget build(BuildContext context) {
+    final controller = BlackListController.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Black'),
@@ -71,10 +69,5 @@ class _BlackListPageState extends State<BlacListPage> {
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    controller.myFocusNode.dispose();
-    Modular.dispose<WhiteListController>();
-  }
+
 }

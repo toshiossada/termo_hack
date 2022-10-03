@@ -2,16 +2,26 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../../../commons/extensions/match_letter_extension.dart';
 import '../../stores/words_store.dart';
+import 'letter_position_page.dart';
+import 'letter_position_store.dart';
 
-class LetterPositionController {
-  final txtLetter = TextEditingController();
+class LetterPositionController extends InheritedNotifier<LetterPositionStore> {
   final WordsStore wordStore;
+  final LetterPositionStore letterPositionStore;
+
+  final txtLetter = TextEditingController();
   final myFocusNode = FocusNode();
-  int dropdownValue = 1;
+  int get dropdownValue => letterPositionStore.value;
+  set dropdownValue(int i) => letterPositionStore.value = i;
 
   LetterPositionController({
+    super.key,
     required this.wordStore,
-  });
+    required this.letterPositionStore,
+  }) : super(notifier: letterPositionStore, child: const LetterPositiontPage());
+
+  static LetterPositionController of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<LetterPositionController>()!;
 
   remove(String letter, int position) =>
       wordStore.removeNotPositionLetter(letter, position);

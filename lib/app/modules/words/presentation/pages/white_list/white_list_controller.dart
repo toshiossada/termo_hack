@@ -3,17 +3,22 @@ import 'package:flutter/cupertino.dart';
 import '../../../../../commons/adapters/custom_alerts/dialog_adapter.dart';
 import '../../../../../commons/extensions/match_letter_extension.dart';
 import '../../stores/words_store.dart';
+import 'white_list_page.dart';
 
-class WhiteListController {
+class WhiteListController extends InheritedNotifier {
   final txtLetter = TextEditingController();
   final WordsStore wordStore;
   final IDialogAdapter dialog;
   final myFocusNode = FocusNode();
 
   WhiteListController({
+    super.key,
     required this.wordStore,
     required this.dialog,
-  });
+  }) : super(child: const WhiteListPage());
+
+  static WhiteListController of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<WhiteListController>()!;
 
   remove(String letter) => wordStore.removeWhiteList(letter.formatWord());
 
