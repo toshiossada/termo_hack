@@ -9,12 +9,16 @@ import 'domain/usecases/filter_position_letters_usecase.dart';
 import 'domain/usecases/filter_words_usecase.dart';
 import 'domain/usecases/search_words_usecase.dart';
 import 'presentation/pages/black_list/black_list_controller.dart';
+import 'presentation/pages/black_list/black_list_page.dart';
 import 'presentation/pages/home/home_controller.dart';
+import 'presentation/pages/home/home_page.dart';
 import 'presentation/pages/home/home_store.dart';
 import 'presentation/pages/home/widgets/info_dialog/info_dialog_controller.dart';
 import 'presentation/pages/letters_position/letter_position_controller.dart';
+import 'presentation/pages/letters_position/letter_position_page.dart';
 import 'presentation/pages/letters_position/letter_position_store.dart';
 import 'presentation/pages/white_list/white_list_controller.dart';
+import 'presentation/pages/white_list/white_list_page.dart';
 import 'presentation/stores/words_store.dart';
 
 class WordsModule extends Module {
@@ -34,39 +38,43 @@ class WordsModule extends Module {
         Bind.factory<IWordRepository>(
             (i) => WordRepository(wordDataSource: i())),
         Bind.factory<IWordDatasource>((i) => WordDatasource(httpClient: i())),
+        Bind.factory((i) => HomeController(
+              wordStore: i(),
+              searchWordsUsecase: i(),
+              dialog: i(),
+              store: i(),
+              filterWordsUsecase: i(),
+              filterPositionLettersUsecase: i(),
+            )),
+        Bind.factory((i) => WhiteListController(
+              wordStore: i(),
+              dialog: i(),
+            )),
+        Bind.factory((i) => BlackListController(
+              wordStore: i(),
+              dialog: i(),
+            )),
+        Bind.factory((i) => LetterPositionController(
+              wordStore: i(),
+              letterPositionStore: i(),
+            )),
       ];
 
   @override
   List<ModularRoute> get routes => [
         ChildRoute(
           '/',
-          child: (_, args) => HomeController(
-            wordStore: Modular.get(),
-            searchWordsUsecase: Modular.get(),
-            dialog: Modular.get(),
-            store: Modular.get(),
-            filterWordsUsecase: Modular.get(),
-            filterPositionLettersUsecase: Modular.get(),
-          ),
+          child: (_, args) => HomePage(controller: Modular.get()),
         ),
         ChildRoute(
           '/whitelist',
-          child: (_, args) => WhiteListController(
-            wordStore: Modular.get(),
-            dialog: Modular.get(),
-          ),
+          child: (_, args) => WhiteListPage(controller: Modular.get()),
         ),
         ChildRoute('/blacklist',
-            child: (_, args) => BlackListController(
-                  wordStore: Modular.get(),
-                  dialog: Modular.get(),
-                )),
+            child: (_, args) => BlackListPage(controller: Modular.get())),
         ChildRoute(
           '/position',
-          child: (_, args) => LetterPositionController(
-            wordStore: Modular.get(),
-            letterPositionStore: Modular.get(),
-          ),
+          child: (_, args) => LetterPositiontPage(controller: Modular.get()),
         ),
       ];
 }

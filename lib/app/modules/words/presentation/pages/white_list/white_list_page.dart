@@ -4,7 +4,12 @@ import '../../viewmodels/words_view_model.dart';
 import 'white_list_controller.dart';
 
 class WhiteListPage extends StatefulWidget {
-  const WhiteListPage({Key? key}) : super(key: key);
+  final WhiteListController controller;
+
+  const WhiteListPage({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   State<WhiteListPage> createState() => _WhiteListPageState();
@@ -13,7 +18,7 @@ class WhiteListPage extends StatefulWidget {
 class _WhiteListPageState extends State<WhiteListPage> {
   @override
   Widget build(BuildContext context) {
-    final controller = WhiteListController.of(context);
+    final controller = widget.controller;
     return Scaffold(
       appBar: AppBar(
         title: const Text('WhiteList'),

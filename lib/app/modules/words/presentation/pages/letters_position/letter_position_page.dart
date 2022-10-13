@@ -4,7 +4,11 @@ import '../../viewmodels/words_view_model.dart';
 import 'letter_position_controller.dart';
 
 class LetterPositiontPage extends StatefulWidget {
-  const LetterPositiontPage({Key? key}) : super(key: key);
+  final LetterPositionController controller;
+  const LetterPositiontPage({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   State<LetterPositiontPage> createState() => _LetterPositiontPageState();
@@ -13,7 +17,7 @@ class LetterPositiontPage extends StatefulWidget {
 class _LetterPositiontPageState extends State<LetterPositiontPage> {
   @override
   Widget build(BuildContext context) {
-    final controller = LetterPositionController.of(context);
+    final controller = widget.controller;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Black'),

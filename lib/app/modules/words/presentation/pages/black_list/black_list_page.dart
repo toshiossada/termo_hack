@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import '../../viewmodels/words_view_model.dart';
 import 'black_list_controller.dart';
 
-class BlacListPage extends StatefulWidget {
-  const BlacListPage({Key? key}) : super(key: key);
+class BlackListPage extends StatefulWidget {
+  final BlackListController controller;
+  const BlackListPage({Key? key, required this.controller}) : super(key: key);
 
   @override
-  State<BlacListPage> createState() => _BlackListPageState();
+  State<BlackListPage> createState() => _BlackListPageState();
 }
 
-class _BlackListPageState extends State<BlacListPage> {
+class _BlackListPageState extends State<BlackListPage> {
   @override
   Widget build(BuildContext context) {
-    final controller = BlackListController.of(context);
+    final controller = widget.controller;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Black'),
@@ -68,6 +69,4 @@ class _BlackListPageState extends State<BlacListPage> {
       ),
     );
   }
-
-
 }

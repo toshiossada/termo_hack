@@ -3,7 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:modular_test/modular_test.dart';
 import 'package:termo/app/app_module.dart';
-import 'package:termo/app/modules/words/presentation/pages/black_list/black_list_controller.dart';
+import 'package:termo/app/modules/words/presentation/pages/black_list/black_list_page.dart';
 import 'package:termo/app/modules/words/words_module.dart';
 
 import '../../../../../../helpers/make_testable_widget.dart';
@@ -25,9 +25,8 @@ E o campo de texto de letra
 ''',
       (tester) async {
     await tester.pumpWidget(makeTestableWidget(
-        child: BlackListController(
-      dialog: Modular.get(),
-      wordStore: Modular.get(),
+        child: BlackListPage(
+      controller: Modular.get(),
     )));
 
     await tester.pumpAndSettle();
@@ -47,9 +46,8 @@ Entao adicionar as letras A, B, C e encontrar na listview
 ''',
       (tester) async {
     await tester.pumpWidget(makeTestableWidget(
-        child: BlackListController(
-      dialog: Modular.get(),
-      wordStore: Modular.get(),
+        child: BlackListPage(
+      controller: Modular.get(),
     )));
     await tester.pumpAndSettle();
 
@@ -78,9 +76,8 @@ Entao adicionar as letras A, B, C e encontrar na listview
 ''',
       (tester) async {
     await tester.pumpWidget(makeTestableWidget(
-        child: BlackListController(
-      dialog: Modular.get(),
-      wordStore: Modular.get(),
+        child: BlackListPage(
+      controller: Modular.get(),
     )));
     await tester.pumpAndSettle();
 
@@ -113,9 +110,8 @@ Entao deverá remover a letra A da lisa e não encontrar mais na tela
 ''',
       (tester) async {
     await tester.pumpWidget(makeTestableWidget(
-        child: BlackListController(
-      dialog: Modular.get(),
-      wordStore: Modular.get(),
+        child: BlackListPage(
+      controller: Modular.get(),
     )));
     await tester.pumpAndSettle();
 
@@ -154,9 +150,8 @@ Entao deverá adicionar a letra D e encontrar na listview
 ''',
       (tester) async {
     await tester.pumpWidget(makeTestableWidget(
-        child: BlackListController(
-      dialog: Modular.get(),
-      wordStore: Modular.get(),
+        child: BlackListPage(
+      controller: Modular.get(),
     )));
     await tester.pumpAndSettle();
 

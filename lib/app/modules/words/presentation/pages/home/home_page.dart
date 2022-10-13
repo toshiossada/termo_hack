@@ -6,7 +6,8 @@ import 'widgets/action_widget.dart';
 import 'widgets/letter_input_widget.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final HomeController controller;
+  const HomePage({Key? key, required this.controller}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -17,14 +18,13 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final controller = HomeController.of(context);
-      controller.init();
+      widget.controller.init();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final controller = HomeController.of(context);
+    final controller = widget.controller;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Termo'),

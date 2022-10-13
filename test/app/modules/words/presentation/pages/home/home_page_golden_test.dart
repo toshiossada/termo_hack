@@ -10,7 +10,7 @@ import 'package:modular_test/modular_test.dart';
 import 'package:termo/app/app_module.dart';
 import 'package:termo/app/commons/adapters/http_client/http_client_adapter.dart';
 import 'package:termo/app/commons/adapters/http_client/http_response.dart';
-import 'package:termo/app/modules/words/presentation/pages/home/home_controller.dart';
+import 'package:termo/app/modules/words/presentation/pages/home/home_page.dart';
 import 'package:termo/app/modules/words/words_module.dart';
 
 import 'home_page_golden_test.mocks.dart';
@@ -66,14 +66,7 @@ Deve exibir as palavras com 5 caracteres
       ])
       ..addScenario(
         name: 'Clean Home',
-        widget: HomeController(
-          dialog: Modular.get(),
-          filterPositionLettersUsecase: Modular.get(),
-          filterWordsUsecase: Modular.get(),
-          searchWordsUsecase: Modular.get(),
-          store: Modular.get(),
-          wordStore: Modular.get(),
-        ),
+        widget: HomePage(controller: Modular.get()),
         onCreate: (scenarioWidgetKey) async {
           await tester.pumpAndSettle();
         },
@@ -93,14 +86,7 @@ Deve exibir as palavras FUNIL e FUZIL
         HttpResponse(statusCode: 200, data: json.encode({'words': words}));
     when(http.get(any)).thenAnswer((_) async => response);
     await loadAppFonts();
-    final home = HomeController(
-      dialog: Modular.get(),
-      filterPositionLettersUsecase: Modular.get(),
-      filterWordsUsecase: Modular.get(),
-      searchWordsUsecase: Modular.get(),
-      store: Modular.get(),
-      wordStore: Modular.get(),
-    );
+    final home = HomePage(controller: Modular.get());
 
     final builder = DeviceBuilder()
       ..overrideDevicesForAllScenarios(devices: [
