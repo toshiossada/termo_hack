@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
 class ActionWidget extends StatelessWidget {
@@ -22,8 +21,8 @@ class ActionWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: paddingLeft ?? 0, vertical: 8),
       child: Badge(
-        badgeColor: color,
-        badgeContent: Text(
+        backgroundColor: color,
+        label: Text(
           count.toString(),
           style: const TextStyle(
             color: Colors.white,

@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'data/external/datasources/word_datasource.dart';
+import 'data/datasource/external/datasources/word_datasource.dart';
 import 'data/infra/datasources/word_datasource_interface.dart';
 import 'data/infra/repositories/word_repository.dart';
 import 'domain/repositories/word_repository_interface.dart';

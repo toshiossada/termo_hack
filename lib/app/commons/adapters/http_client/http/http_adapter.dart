@@ -1,4 +1,5 @@
 import 'package:http/http.dart';
+
 import '../http_client_adapter.dart';
 import '../http_response.dart';
 
@@ -24,6 +25,7 @@ class HttpAdapter implements IHttpClientAdapter {
     String path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
+    bool cached = false,
   }) async {
     var url = _buildUrl(path, queryParameters);
 

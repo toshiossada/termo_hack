@@ -20,12 +20,18 @@ class DioAdapter implements IHttpClientAdapter {
     String path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
+    bool cached = false,
   }) async {
     try {
       final result = await dio.get(
         path,
         queryParameters: queryParameters,
-        options: Options(headers: headers),
+        options: Options(
+          headers: headers,
+          extra: {
+            'cached': cached,
+          },
+        ),
       );
       final response = HttpResponse(
         data: result.data,

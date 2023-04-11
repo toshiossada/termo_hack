@@ -28,9 +28,11 @@ Quando a blacklistfor vazia
 E a whitelist for vazia
 Então deve adicionar na blacklist as letras DAO
 ''', () async {
+  //arranje
       controller.txtLetter.value = const TextEditingValue(text: 'dado');
+      //act
       controller.addLetter();
-
+//assert
       expect(wordStore.value.blackList.length == 3, true);
       expect(wordStore.value.blackList.any((e) => e == 'D'), true);
       expect(wordStore.value.blackList.any((e) => e == 'A'), true);

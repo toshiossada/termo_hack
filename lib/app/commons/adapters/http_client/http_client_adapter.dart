@@ -5,6 +5,7 @@ abstract class IHttpClientAdapter {
     String path, {
     Map<String, String> queryParameters,
     Map<String, String> headers,
+    bool cached = false,
   });
 
   Future<HttpResponse> post(

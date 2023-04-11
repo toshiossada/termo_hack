@@ -45,13 +45,11 @@ void main() {
     ]);
   });
 
-  testGoldens(
-      '''
+  testGoldens('''
 Dado uma lista de palavras
 Quando a página é carregada
 Deve exibir as palavras com 5 caracteres
-''',
-      (tester) async {
+''', (tester) async {
     final response =
         HttpResponse(statusCode: 200, data: json.encode({'words': words}));
     when(http.get(any)).thenAnswer((_) async => response);
@@ -75,13 +73,11 @@ Deve exibir as palavras com 5 caracteres
     await screenMatchesGolden(tester, 'homeStarted');
   });
 
-  testGoldens(
-      '''
+  testGoldens('''
 Dado uma lista de palavras
 Quando digitado a letra F na primeira caixa de texto
 Deve exibir as palavras FUNIL e FUZIL
-''',
-      (tester) async {
+''', (tester) async {
     final response =
         HttpResponse(statusCode: 200, data: json.encode({'words': words}));
     when(http.get(any)).thenAnswer((_) async => response);
