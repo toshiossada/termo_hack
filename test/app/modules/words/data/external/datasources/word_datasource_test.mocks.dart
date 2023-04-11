@@ -46,6 +46,7 @@ class MockIHttpClientAdapter extends _i1.Mock
     String? path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
+    bool? cached = false,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -54,6 +55,7 @@ class MockIHttpClientAdapter extends _i1.Mock
           {
             #queryParameters: queryParameters,
             #headers: headers,
+            #cached: cached,
           },
         ),
         returnValue: _i4.Future<_i2.HttpResponse>.value(_FakeHttpResponse_0(
@@ -64,6 +66,7 @@ class MockIHttpClientAdapter extends _i1.Mock
             {
               #queryParameters: queryParameters,
               #headers: headers,
+              #cached: cached,
             },
           ),
         )),

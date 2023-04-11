@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:termo/app/modules/words/data/infra/repositories/word_repository.dart';
-import 'package:termo/app/modules/words/data/infra/datasources/word_datasource_interface.dart';
+import 'package:termo/app/modules/words/infra/data/repositories/word_repository.dart';
+import 'package:termo/app/modules/words/infra/data/datasources/word_datasource_interface.dart';
 
 import 'word_repository_test.mocks.dart';
 

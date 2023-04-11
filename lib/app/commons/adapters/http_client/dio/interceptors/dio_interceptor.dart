@@ -1,32 +1,23 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../dafault_errors.dart';
+import '../../../../domain/usecases/check_internet.dart';
 import '../../../cache_adapter/cache_adapter.dart';
 import '../../../cache_adapter/models/cache_model.dart';
 
 class CustomInterceptors extends InterceptorsWrapper {
   final durationCacheInMinutes = 5;
   final ICacheAdapter cacheAdapter;
+  final CheckInternetUsecase checkInternetUsecase;
+
   CustomInterceptors({
     required this.cacheAdapter,
+    required this.checkInternetUsecase,
   });
-
-  Future<bool> _isInternetAvailable() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        return true;
-      }
-    } on SocketException catch (_) {
-      return false;
-    }
-    return false;
-  }
 
   @override
   Future<void> onRequest(
@@ -51,7 +42,7 @@ class CustomInterceptors extends InterceptorsWrapper {
       }
     }
 
-    final online = await _isInternetAvailable();
+    final online = await checkInternetUsecase();
     if (options.extra['cached'] ?? false || !online) {
       final id = '${options.method}${options.path}';
       var dataCached = await cacheAdapter.get(id);
@@ -63,10 +54,10 @@ class CustomInterceptors extends InterceptorsWrapper {
                   durationCacheInMinutes)) {
         handler.resolve(
           Response(
-            data: //dataCached.data,
-                json.encode({
-              'words': ['Aarão', 'Abel']
-            }),
+            data: json.encode(dataCached?.data),
+            //     json.encode({
+            //   'words': ['Aarão', 'Abel']
+            // }),
             extra: options.extra,
             statusCode: 200,
             requestOptions: options,

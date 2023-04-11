@@ -1,8 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'data/datasource/external/datasources/word_datasource.dart';
-import 'data/infra/datasources/word_datasource_interface.dart';
-import 'data/infra/repositories/word_repository.dart';
+import 'infra/datasource/external/datasources/word_datasource.dart';
+import 'infra/data/datasources/word_datasource_interface.dart';
+import 'infra/data/repositories/word_repository.dart';
 import 'domain/repositories/word_repository_interface.dart';
 import 'domain/usecases/build_plural_word_usecase.dart';
 import 'domain/usecases/filter_position_letters_usecase.dart';

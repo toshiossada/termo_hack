@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import '../../../../../../commons/adapters/http_client/http_client_adapter.dart';
 import '../../../../../../commons/dafault_errors.dart';
-import '../../../infra/datasources/word_datasource_interface.dart';
+import '../../../data/datasources/word_datasource_interface.dart';
 
 //https://raw.githubusercontent.com/toshiossada/termo/main/words.json
 
@@ -17,7 +17,7 @@ class WordDatasource implements IWordDatasource {
     try {
       final response = await _httpClient.get(
         'https://raw.githubusercontent.com/toshiossada/termo/main/words.json',
-        cached: true,
+        cached: false,
       );
 
       final data = await json.decode(response.data);

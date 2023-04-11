@@ -11,6 +11,7 @@ import 'commons/adapters/custom_alerts/launch_url/launch_url_adapter.dart';
 import 'commons/adapters/http_client/dio/dio_adapter.dart';
 import 'commons/adapters/http_client/dio/interceptors/dio_interceptor.dart';
 import 'commons/adapters/http_client/http_client_adapter.dart';
+import 'commons/domain/usecases/check_internet.dart';
 import 'modules/words/words_module.dart';
 
 class AppModule extends Module {
@@ -33,8 +34,10 @@ class AppModule extends Module {
         ])),
     Bind.factory<CustomInterceptors>((i) => CustomInterceptors(
           cacheAdapter: i(),
+          checkInternetUsecase: i(),
         )),
     Bind.factory<ICacheAdapter>((i) => CacheHive()),
+    Bind.factory((i) => CheckInternetUsecase()),
   ];
 
   @override
