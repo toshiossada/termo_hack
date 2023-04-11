@@ -43,7 +43,7 @@ class CustomInterceptors extends InterceptorsWrapper {
     }
 
     final online = await checkInternetUsecase();
-    if (options.extra['cached'] ?? false || !online) {
+    if ((options.extra['cached'] ?? false) || !online) {
       final id = '${options.method}${options.path}';
       var dataCached = await cacheAdapter.get(id);
 
