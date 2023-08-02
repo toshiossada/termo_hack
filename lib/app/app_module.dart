@@ -1,4 +1,4 @@
-import 'package:asuka/asuka.dart' as asuka;
+import 'package:asuka/asuka.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -16,32 +16,31 @@ import 'modules/words/words_module.dart';
 
 class AppModule extends Module {
   @override
-  final List<Bind> binds = [
-    Bind.factory<FShowDialog>((i) => (Widget child) {
-          asuka.showDialog(builder: (context) => child);
-        }),
-    Bind.factory<FAlert>((i) => (String text) {
-          asuka.AsukaSnackbar.alert(text).show();
-        }),
-    Bind.factory<IDialogAdapter>((i) => AsukaDialog(
-          fShowDialog: i<FShowDialog>(),
-          fAlert: i<FAlert>(),
-        )),
-    Bind.factory((i) => LaunchUrlAdapter()),
-    Bind.factory((i) => Dio()),
-    Bind.factory<IHttpClientAdapter>((i) => DioAdapter(dio: i(), interceptors: [
-          i<CustomInterceptors>(),
-        ])),
-    Bind.factory<CustomInterceptors>((i) => CustomInterceptors(
-          cacheAdapter: i(),
-          checkInternetUsecase: i(),
-        )),
-    Bind.factory<ICacheAdapter>((i) => CacheHive()),
-    Bind.factory((i) => CheckInternetUsecase()),
-  ];
+  void binds(i) {
+    i.addInstance(Dio());
+    i.add<ICacheAdapter>(CacheHive.new);
+    i.add(CheckInternetUsecase.new);
+    i.add<CustomInterceptorsAdapter>(CustomInterceptorsAdapter.new);
+    i.addInstance<FShowDialog>((Widget child) {
+      Asuka.showDialog(builder: (context) => child);
+    });
+    i.addInstance<FAlert>((String text) {
+      AsukaSnackbar.alert(text).show();
+    });
+
+    i.addInstance<IDialogAdapter>(AsukaDialog(
+      fAlert: i.get<FAlert>(),
+      fShowDialog: i.get<FShowDialog>(),
+    ));
+    i.add(LaunchUrlAdapter.new);
+    i.addInstance<IHttpClientAdapter>(DioAdapter(
+      dio: i.get<Dio>(),
+      interceptors: [i.get<CustomInterceptorsAdapter>()],
+    ));
+  }
 
   @override
-  List<ModularRoute> get routes => [
-        ModuleRoute('/', module: WordsModule()),
-      ];
+  void routes(r) {
+    r.module('/', module: WordsModule());
+  }
 }

@@ -15,7 +15,7 @@ class DatasourceError extends Failure {
   });
 }
 
-class HttpClientError extends Failure implements DioError {
+class HttpClientError extends Failure implements DioException {
   final int? statusCode;
   final dynamic data;
   @override
@@ -25,12 +25,12 @@ class HttpClientError extends Failure implements DioError {
     this.data,
     required this.message,
     required this.statusCode,
-    this.error,
     required this.requestOptions,
     this.response,
-    this.stackTrace,
-    required this.type,
-  });
+    this.type = DioExceptionType.unknown,
+    this.error,
+    StackTrace? stackTrace,
+  }) : stackTrace = stackTrace ?? StackTrace.current;
 
   @override
   dynamic error;
@@ -39,7 +39,27 @@ class HttpClientError extends Failure implements DioError {
   @override
   Response? response;
   @override
-  StackTrace? stackTrace;
+  StackTrace stackTrace;
   @override
-  DioErrorType type;
+  DioExceptionType type;
+
+  @override
+  DioException copyWith(
+      {RequestOptions? requestOptions,
+      Response? response,
+      DioExceptionType? type,
+      Object? error,
+      StackTrace? stackTrace,
+      String? message}) {
+    return HttpClientError(
+      requestOptions: requestOptions ?? this.requestOptions,
+      response: response ?? this.response,
+      type: type ?? this.type,
+      error: error ?? this.error,
+      stackTrace: stackTrace ?? this.stackTrace,
+      message: message ?? this.message,
+      statusCode: statusCode,
+      data: data,
+    );
+  }
 }

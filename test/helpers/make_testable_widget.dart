@@ -1,5 +1,5 @@
+import 'package:asuka/asuka.dart';
 import 'package:flutter/material.dart';
-import 'package:asuka/asuka.dart' as asuka;
 
 Widget makeTestableWidget({
   required Widget child,
@@ -7,11 +7,11 @@ Widget makeTestableWidget({
 }) {
   final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
   final navigatorKey = GlobalKey<NavigatorState>();
-  final navigatorObservers = <NavigatorObserver>[asuka.asukaHeroController];
+  final navigatorObservers = <NavigatorObserver>[Asuka.asukaHeroController];
   if (navigatorObserver != null) navigatorObservers.add(navigatorObserver);
 
   return MaterialApp(
-    builder: asuka.builder,
+    builder: Asuka.builder,
     scaffoldMessengerKey: scaffoldMessengerKey,
     navigatorKey: navigatorKey,
     navigatorObservers: navigatorObservers,

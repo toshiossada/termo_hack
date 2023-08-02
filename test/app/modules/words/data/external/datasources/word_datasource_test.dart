@@ -77,7 +77,7 @@ Então deve lançar um DatasourceError
     when(httpClient.get(any)).thenThrow(HttpClientError(
       data: {},
       statusCode: 500,
-      type: DioErrorType.response,
+      type: DioExceptionType.badResponse,
       message: '',
       requestOptions: RequestOptions(path: ''),
     ));

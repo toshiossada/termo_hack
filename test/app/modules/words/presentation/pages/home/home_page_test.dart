@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:modular_test/modular_test.dart';
 import 'package:termo/app/app_module.dart';
 import 'package:termo/app/commons/adapters/http_client/http_client_adapter.dart';
 import 'package:termo/app/commons/adapters/http_client/http_response.dart';
@@ -19,14 +19,17 @@ import 'home_page_test.mocks.dart';
 void main() {
   final http = MockIHttpClientAdapter();
   final navigate = MockIModularNavigator();
+  setUpAll(() {
+    const MethodChannel channel =
+        MethodChannel('plugins.flutter.io/path_provider');
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+      return './test/cache/home_page_test';
+    });
+    Modular.bindModule(AppModule());
+    Modular.bindModule(WordsModule());
+    Modular.replaceInstance<IHttpClientAdapter>(http);
 
-  setUp(() {
-    initModules([
-      AppModule(),
-      WordsModule(),
-    ], replaceBinds: [
-      Bind.instance<IHttpClientAdapter>(http),
-    ]);
     final words = [
       'amigo',
       'animal',

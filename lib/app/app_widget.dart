@@ -1,4 +1,4 @@
-import 'package:asuka/asuka.dart' as asuka;
+import 'package:asuka/asuka.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -7,9 +7,9 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Modular.setObservers([asuka.asukaHeroController]);
+    Modular.setObservers([Asuka.asukaHeroController]);
     return MaterialApp.router(
-      builder: asuka.builder,
+      builder: Asuka.builder,
       debugShowCheckedModeBanner: false,
       title: 'Termo',
       theme: ThemeData(
@@ -28,8 +28,7 @@ class AppWidget extends StatelessWidget {
           },
         ),
       ),
-      routeInformationParser: Modular.routeInformationParser,
-      routerDelegate: Modular.routerDelegate,
+      routerConfig: Modular.routerConfig,
     ); //
   }
 }

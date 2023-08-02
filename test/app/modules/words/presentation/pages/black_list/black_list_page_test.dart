@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:modular_test/modular_test.dart';
 import 'package:termo/app/app_module.dart';
 import 'package:termo/app/modules/words/presentation/pages/black_list/black_list_page.dart';
 import 'package:termo/app/modules/words/words_module.dart';
@@ -9,11 +9,15 @@ import 'package:termo/app/modules/words/words_module.dart';
 import '../../../../../../helpers/make_testable_widget.dart';
 
 void main() {
-  setUp(() {
-    initModules([
-      AppModule(),
-      WordsModule(),
-    ]);
+  setUpAll(() {
+    const MethodChannel channel =
+        MethodChannel('plugins.flutter.io/path_provider');
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+      return './test/cache/black_list_page_test';
+    });
+    Modular.bindModule(AppModule());
+    Modular.bindModule(WordsModule());
   });
 
   testWidgets(

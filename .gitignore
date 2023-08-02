@@ -48,3 +48,6 @@ app.*.map.json
 
 full_coverage_test.dart
 metrics.txt
+
+cache.hive
+cache.lock

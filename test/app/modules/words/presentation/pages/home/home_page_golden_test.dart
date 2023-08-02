@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:modular_test/modular_test.dart';
 import 'package:termo/app/app_module.dart';
 import 'package:termo/app/commons/adapters/http_client/http_client_adapter.dart';
 import 'package:termo/app/commons/adapters/http_client/http_response.dart';
@@ -35,21 +35,26 @@ void main() {
     'mão',
     'melão',
   ];
-
   setUpAll(() {
-    initModules([
-      AppModule(),
-      WordsModule(),
-    ], replaceBinds: [
-      Bind.instance<IHttpClientAdapter>(http),
-    ]);
+    const MethodChannel channel =
+        MethodChannel('plugins.flutter.io/path_provider');
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+      return './test/cache/home_page_golden_test';
+    });
+    Modular.bindModule(AppModule());
+    Modular.bindModule(WordsModule());
+    Modular.replaceInstance<IHttpClientAdapter>(http);
   });
 
-  testGoldens('''
+
+  testGoldens(
+      '''
 Dado uma lista de palavras
 Quando a página é carregada
 Deve exibir as palavras com 5 caracteres
-''', (tester) async {
+''',
+      (tester) async {
     final response =
         HttpResponse(statusCode: 200, data: json.encode({'words': words}));
     when(http.get(any)).thenAnswer((_) async => response);
@@ -73,11 +78,13 @@ Deve exibir as palavras com 5 caracteres
     await screenMatchesGolden(tester, 'homeStarted');
   });
 
-  testGoldens('''
+  testGoldens(
+      '''
 Dado uma lista de palavras
 Quando digitado a letra F na primeira caixa de texto
 Deve exibir as palavras FUNIL e FUZIL
-''', (tester) async {
+''',
+      (tester) async {
     final response =
         HttpResponse(statusCode: 200, data: json.encode({'words': words}));
     when(http.get(any)).thenAnswer((_) async => response);

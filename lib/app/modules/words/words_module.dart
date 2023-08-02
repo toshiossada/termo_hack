@@ -1,13 +1,13 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'infra/datasource/external/datasources/word_datasource.dart';
-import 'infra/data/datasources/word_datasource_interface.dart';
-import 'infra/data/repositories/word_repository.dart';
 import 'domain/repositories/word_repository_interface.dart';
 import 'domain/usecases/build_plural_word_usecase.dart';
 import 'domain/usecases/filter_position_letters_usecase.dart';
 import 'domain/usecases/filter_words_usecase.dart';
 import 'domain/usecases/search_words_usecase.dart';
+import 'infra/data/datasources/word_datasource_interface.dart';
+import 'infra/data/repositories/word_repository.dart';
+import 'infra/datasource/external/datasources/word_datasource.dart';
 import 'presentation/pages/black_list/black_list_controller.dart';
 import 'presentation/pages/black_list/black_list_page.dart';
 import 'presentation/pages/home/home_controller.dart';
@@ -23,58 +23,38 @@ import 'presentation/stores/words_store.dart';
 
 class WordsModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind.lazySingleton((i) => WordsStore()),
-        Bind.lazySingleton((i) => HomeStore()),
-        Bind.lazySingleton((i) => LetterPositionStore()),
-        Bind.factory((i) => InfoDialogController(launchUrlAdapter: i())),
-        Bind.factory((i) => FilterPositionLettersUsecase()),
-        Bind.factory((i) => FilterWordsUsecase()),
-        Bind.factory((i) => SearchWordsUsecase(
-              wordRepository: i(),
-              buildPluralWord: i(),
-            )),
-        Bind.factory((i) => BuildPluralWordUsecase()),
-        Bind.factory<IWordRepository>(
-            (i) => WordRepository(wordDataSource: i())),
-        Bind.factory<IWordDatasource>((i) => WordDatasource(httpClient: i())),
-        Bind.factory((i) => HomeController(
-              wordStore: i(),
-              searchWordsUsecase: i(),
-              dialog: i(),
-              store: i(),
-              filterWordsUsecase: i(),
-              filterPositionLettersUsecase: i(),
-            )),
-        Bind.factory((i) => WhiteListController(
-              wordStore: i(),
-              dialog: i(),
-            )),
-        Bind.factory((i) => BlackListController(
-              wordStore: i(),
-              dialog: i(),
-            )),
-        Bind.factory((i) => LetterPositionController(
-              wordStore: i(),
-              letterPositionStore: i(),
-            )),
-      ];
+  void binds(i) {
+    i.addLazySingleton(WordsStore.new);
+    i.addLazySingleton(HomeStore.new);
+    i.addLazySingleton(LetterPositionStore.new);
+    i.add(InfoDialogController.new);
+    i.add(FilterPositionLettersUsecase.new);
+    i.add(FilterWordsUsecase.new);
+    i.add(SearchWordsUsecase.new);
+    i.add(BuildPluralWordUsecase.new);
+    i.add<IWordRepository>(WordRepository.new);
+    i.add<IWordDatasource>(WordDatasource.new);
+    i.add(HomeController.new);
+    i.add(WhiteListController.new);
+    i.add(BlackListController.new);
+    i.add(LetterPositionController.new);
+  }
 
   @override
-  List<ModularRoute> get routes => [
-        ChildRoute(
-          '/',
-          child: (_, args) => HomePage(controller: Modular.get()),
-        ),
-        ChildRoute(
-          '/whitelist',
-          child: (_, args) => WhiteListPage(controller: Modular.get()),
-        ),
-        ChildRoute('/blacklist',
-            child: (_, args) => BlackListPage(controller: Modular.get())),
-        ChildRoute(
-          '/position',
-          child: (_, args) => LetterPositiontPage(controller: Modular.get()),
-        ),
-      ];
+  void routes(r) {
+    r.child(
+      '/',
+      child: (context) => HomePage(controller: Modular.get()),
+    );
+    r.child(
+      '/whitelist',
+      child: (context) => WhiteListPage(controller: Modular.get()),
+    );
+    r.child('/blacklist',
+        child: (context) => BlackListPage(controller: Modular.get()));
+    r.child(
+      '/position',
+      child: (context) => LetterPositiontPage(controller: Modular.get()),
+    );
+  }
 }

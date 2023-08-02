@@ -9,12 +9,12 @@ import '../../../../domain/usecases/check_internet.dart';
 import '../../../cache_adapter/cache_adapter.dart';
 import '../../../cache_adapter/models/cache_model.dart';
 
-class CustomInterceptors extends InterceptorsWrapper {
+class CustomInterceptorsAdapter extends InterceptorsWrapper {
   final durationCacheInMinutes = 5;
   final ICacheAdapter cacheAdapter;
   final CheckInternetUsecase checkInternetUsecase;
 
-  CustomInterceptors({
+  CustomInterceptorsAdapter({
     required this.cacheAdapter,
     required this.checkInternetUsecase,
   });
@@ -106,7 +106,7 @@ class CustomInterceptors extends InterceptorsWrapper {
 
   @override
   void onError(
-    DioError err,
+    DioException err,
     ErrorInterceptorHandler handler,
   ) {
     HttpClientError failure;
