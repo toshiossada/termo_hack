@@ -16,7 +16,7 @@ import 'modules/words/words_module.dart';
 
 class AppModule extends Module {
   @override
-  void binds(i) {
+  void exportedBinds(Injector i) {
     i.addInstance(Dio());
     i.add<ICacheAdapter>(CacheHive.new);
     i.add(CheckInternetUsecase.new);
@@ -38,6 +38,9 @@ class AppModule extends Module {
       interceptors: [i.get<CustomInterceptorsAdapter>()],
     ));
   }
+
+  @override
+  void binds(i) {}
 
   @override
   void routes(r) {

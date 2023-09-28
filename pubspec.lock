@@ -45,10 +45,10 @@ packages:
     dependency: transitive
     description:
       name: auto_injector
-      sha256: da17c99bd1ea92fb2ed442f76812792cdb5de914d74b276a00add42b1e561251
+      sha256: "2952a4d4339ed3b65e8e54765ec68ee6ada5cb21d83cb8d39e3f6b4e690ab5ca"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0+4"
+    version: "2.0.2"
   badges:
     dependency: "direct main"
     description:
@@ -271,10 +271,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_modular
-      sha256: "8352a967b58e876a3272acfd7c7bd8c64c73ec7d47b1e6ecad2a5879afefc2a5"
+      sha256: ac6298ce1abd414286ee5a554fc45e81e358461979b5d4e02c8abd685e3b23f2
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.1"
+    version: "6.3.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -451,10 +451,10 @@ packages:
     dependency: transitive
     description:
       name: modular_core
-      sha256: "4b2580a8a44ad72886fa7f348e65b36df098b082bb6f561919a8623cd489f3b0"
+      sha256: "5baaa460ac9d85d457d6864ef41a2194b8115a6bdeb585a684789f2d9004c892"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1+1"
+    version: "3.3.2"
   package_config:
     dependency: transitive
     description:
@@ -753,6 +753,14 @@ packages:
     description:
       name: url_launcher_windows
       sha256: "7967065dd2b5fccc18c653b97958fdf839c5478c28e767c61ee879f4e7882422"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.7"
+  uuid:
+    dependency: transitive
+    description:
+      name: uuid
+      sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
       url: "https://pub.dev"
     source: hosted
     version: "3.0.7"

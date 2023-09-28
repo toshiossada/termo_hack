@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../app_module.dart';
 import 'domain/repositories/word_repository_interface.dart';
 import 'domain/usecases/build_plural_word_usecase.dart';
 import 'domain/usecases/filter_position_letters_usecase.dart';
@@ -22,6 +23,11 @@ import 'presentation/pages/white_list/white_list_page.dart';
 import 'presentation/stores/words_store.dart';
 
 class WordsModule extends Module {
+  @override
+  List<Module> get imports => [
+        AppModule(),
+      ];
+
   @override
   void binds(i) {
     i.addLazySingleton(WordsStore.new);

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:termo/main.dart' as app;
 import 'package:mockito/annotations.dart';
+import 'package:termo/app/app_module.dart';
 import 'package:termo/app/commons/adapters/http_client/http_client_adapter.dart';
+import 'package:termo/app/modules/words/words_module.dart';
+import 'package:termo/main.dart' as app;
 
 @GenerateMocks([IHttpClientAdapter, IModularNavigator])
 void main() {
@@ -49,13 +51,17 @@ Deve exibir as palavras com 5 caracteres
     },
   );
 
-  testWidgets('''
+  testWidgets(
+      '''
 Dado uma lista de palavras
 Quando limpar a tela
 E digitado as letras FU_IL
 Deve exibir as palavra FUZIL e FUNIL
-''', (tester) async {
+''',
+      (tester) async {
     app.main();
+    Modular.bindModule(AppModule());
+    Modular.bindModule(WordsModule());
     await tester.pumpAndSettle();
 
     final txtFirst = find.descendant(
@@ -95,13 +101,17 @@ Deve exibir as palavra FUZIL e FUNIL
     expect(fuzil, findsWidgets);
     expect(funil, findsWidgets);
   });
-  testWidgets('''
+  testWidgets(
+      '''
 Dado uma lista de palavras
 Quando limpar a tela
 E digitado as letras FUZIL
 Deve exibir as palavra FUZIL
-''', (tester) async {
+''',
+      (tester) async {
     app.main();
+    Modular.bindModule(AppModule());
+    Modular.bindModule(WordsModule());
     await tester.pumpAndSettle();
 
     final txtFirst = find.descendant(
