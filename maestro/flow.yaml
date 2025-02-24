@@ -1,0 +1,26 @@
+appId: br.com.flutterbrasil.termo
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: 'firstLetter'
+- inputText: 'F'
+- inputText: 'U'
+- tapOn:
+    id: 'fourthLetter'
+- inputText: 'I'
+- inputText: 'L'
+- assertVisible: 'FUNIL'
+- assertVisible: 'FUZIL'
+- assertVisible: 'FUTIL'
+- assertVisible:
+    id: 'btn_blacklist_position'
+
+- tapOn:
+    id: 'btnClear'
+- scrollUntilVisible:
+    element: 'CUBAS'
+    direction: DOWN
+- scrollUntilVisible:
+    element: 'ANDRE'
+    direction: UP

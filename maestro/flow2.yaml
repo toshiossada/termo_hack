@@ -1,0 +1,28 @@
+appId: br.com.flutterbrasil.termo
+---
+- runScript: objects.js
+- clearState
+- launchApp
+- tapOn:
+          id: ${output.fields.first}
+- inputText: 'F'
+- tapOn:
+          id: ${output.fields.second}
+- inputText: 'U'
+- tapOn:
+          id: ${output.fields.fourth}
+- inputText: 'I'
+- inputText: 'L'
+- assertVisible: 'FUNIL'
+- assertVisible: 'FUZIL'
+- assertVisible: 'FUTIL'
+- assertVisible:
+          id: ${output.actions.blacklist}
+- tapOn:
+          id: ${output.actions.btnClear}
+- scrollUntilVisible:
+          element: 'CUBAS'
+          direction: DOWN
+- scrollUntilVisible:
+          element: 'ANDRE'
+          direction: UP

@@ -1,0 +1,5 @@
+appId: br.com.flutterbrasil.termo
+---
+flows:
+  - '*/*'
+

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../../dafault_errors.dart';
+import '../../../default_errors.dart';
 import '../http_client_adapter.dart';
 import '../http_response.dart';
 

@@ -62,4 +62,7 @@ class HttpClientError extends Failure implements DioException {
       data: data,
     );
   }
+
+  @override
+  DioExceptionReadableStringBuilder? stringBuilder;
 }

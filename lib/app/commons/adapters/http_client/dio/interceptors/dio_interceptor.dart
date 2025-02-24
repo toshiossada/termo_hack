@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../../dafault_errors.dart';
+import '../../../../default_errors.dart';
 import '../../../../domain/usecases/check_internet.dart';
 import '../../../cache_adapter/cache_adapter.dart';
 import '../../../cache_adapter/models/cache_model.dart';

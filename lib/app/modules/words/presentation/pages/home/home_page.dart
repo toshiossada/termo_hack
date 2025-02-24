@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
               valueListenable: controller.wordStore,
               builder: (context, value, _) {
                 return ActionWidget(
+                  key: const Key('btn_whitelist'),
                   color: Colors.blue,
                   count: value.whiteList.length,
                   onPressed: controller.showWhitelist,
@@ -43,6 +44,7 @@ class _HomePageState extends State<HomePage> {
             valueListenable: controller.wordStore,
             builder: (context, value, _) {
               return ActionWidget(
+                key: const Key('btn_blacklist_position'),
                 color: Colors.orange,
                 count: value.word.notPositionLetter.length,
                 onPressed: controller.showPositionLetter,
@@ -55,6 +57,7 @@ class _HomePageState extends State<HomePage> {
             valueListenable: controller.wordStore,
             builder: (context, value, _) {
               return ActionWidget(
+                key: const Key('btn_blacklist'),
                 color: Colors.red,
                 count: value.blackList.length,
                 onPressed: controller.showBlacklist,
@@ -140,9 +143,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: controller.clear,
-        child: const Icon(Icons.cleaning_services_outlined),
+      floatingActionButton: Semantics(
+        identifier: 'btnClear',
+        child: FloatingActionButton(
+          onPressed: controller.clear,
+          child: const Icon(Icons.cleaning_services_outlined),
+        ),
       ),
     );
   }

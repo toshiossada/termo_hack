@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../commons/extensions/key_extension.dart';
+
 class ActionWidget extends StatelessWidget {
   final VoidCallback onPressed;
   final int? count;
@@ -28,12 +30,16 @@ class ActionWidget extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        child: IconButton(
-          icon: Icon(
-            icon,
-            color: color,
+        child: Semantics(
+          identifier: super.key?.keyValue,
+          label: count.toString(),
+          child: IconButton(
+            icon: Icon(
+              icon,
+              color: color,
+            ),
+            onPressed: onPressed,
           ),
-          onPressed: onPressed,
         ),
       ),
     );

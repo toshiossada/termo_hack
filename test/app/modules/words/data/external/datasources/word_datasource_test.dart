@@ -6,7 +6,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:termo/app/commons/adapters/http_client/http_client_adapter.dart';
 import 'package:termo/app/commons/adapters/http_client/http_response.dart';
-import 'package:termo/app/commons/dafault_errors.dart';
+import 'package:termo/app/commons/default_errors.dart';
 import 'package:termo/app/modules/words/infra/datasource/external/datasources/word_datasource.dart';
 
 import 'word_datasource_test.mocks.dart';

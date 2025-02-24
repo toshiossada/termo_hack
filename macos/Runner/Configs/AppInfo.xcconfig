@@ -8,7 +8,7 @@
 PRODUCT_NAME = termo
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.termo
+PRODUCT_BUNDLE_IDENTIFIER = br.com.flutterbrasil.termo
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 br.com.flutterbrasil. All rights reserved.
