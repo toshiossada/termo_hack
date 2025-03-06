@@ -1,23 +1,30 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:termo/app/app_module.dart';
-import 'package:termo/app/commons/adapters/http_client/http_client_adapter.dart';
-import 'package:termo/app/commons/adapters/http_client/http_response.dart';
+import 'package:termo/app/commons/adapters/custom_alerts/dialog_adapter.dart';
+import 'package:termo/app/modules/words/domain/usecases/filter_position_letters_usecase.dart';
+import 'package:termo/app/modules/words/domain/usecases/filter_words_usecase.dart';
+import 'package:termo/app/modules/words/domain/usecases/search_words_usecase.dart';
+import 'package:termo/app/modules/words/presentation/pages/home/home_controller.dart';
 import 'package:termo/app/modules/words/presentation/pages/home/home_page.dart';
-import 'package:termo/app/modules/words/words_module.dart';
+import 'package:termo/app/modules/words/presentation/pages/home/home_store.dart';
+import 'package:termo/app/modules/words/presentation/stores/words_store.dart';
 
+import '../../../../../../helpers/font_loader.dart';
+import '../../../../../../helpers/make_testable_widget.dart';
 import 'home_page_golden_test.mocks.dart';
 
-@GenerateMocks([IHttpClientAdapter])
+@GenerateMocks([IDialogAdapter, SearchWordsUsecase])
 void main() {
-  final http = MockIHttpClientAdapter();
+  final searchWordsUsecase = MockSearchWordsUsecase();
+  final dialogAdapter = MockIDialogAdapter();
+  late final HomeController controller;
+  final homeStore = HomeStore();
+  final filterPositionLettersUsecase = FilterPositionLettersUsecase();
+  final wordStore = WordsStore();
+  final filterWordsUsecase = FilterWordsUsecase();
 
   final words = [
     'amigo',
@@ -36,82 +43,65 @@ void main() {
     'melão',
   ];
   setUpAll(() {
-    const MethodChannel channel =
-        MethodChannel('plugins.flutter.io/path_provider');
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
-      return './test/cache/home_page_golden_test';
-    });
-    Modular.bindModule(AppModule());
-    Modular.bindModule(WordsModule());
-    Modular.replaceInstance<IHttpClientAdapter>(http);
+    controller = HomeController(
+      searchWordsUsecase: searchWordsUsecase,
+      filterWordsUsecase: filterWordsUsecase,
+      dialog: dialogAdapter,
+      store: homeStore,
+      wordStore: wordStore,
+      filterPositionLettersUsecase: filterPositionLettersUsecase,
+    );
   });
 
+  testWidgets(
+    'Dado uma lista de palavras '
+    'Quando a página é carregada '
+    'Deve exibir as palavras com 5 caracteres ',
+    tags: 'golden',
+    (tester) async {
+      loadFonts();
+      when(searchWordsUsecase.call()).thenAnswer((_) async => words);
 
-  testGoldens(
-      '''
-Dado uma lista de palavras
-Quando a página é carregada
-Deve exibir as palavras com 5 caracteres
-''',
-      (tester) async {
-    final response =
-        HttpResponse(statusCode: 200, data: json.encode({'words': words}));
-    when(http.get(any)).thenAnswer((_) async => response);
-    await loadAppFonts();
-
-    final builder = DeviceBuilder()
-      ..overrideDevicesForAllScenarios(devices: [
-        Device.phone,
-        Device.iphone11,
-        Device.tabletPortrait,
-        Device.tabletLandscape,
-      ])
-      ..addScenario(
-        name: 'Clean Home',
-        widget: HomePage(controller: Modular.get()),
-        onCreate: (scenarioWidgetKey) async {
-          await tester.pumpAndSettle();
-        },
+      final home = HomePage(controller: controller);
+      await tester.pumpWidget(
+        makeTestableWidget(child: MaterialApp(home: home)),
       );
-    await tester.pumpDeviceBuilder(builder);
-    await screenMatchesGolden(tester, 'homeStarted');
-  });
 
-  testGoldens(
-      '''
-Dado uma lista de palavras
-Quando digitado a letra F na primeira caixa de texto
-Deve exibir as palavras FUNIL e FUZIL
-''',
-      (tester) async {
-    final response =
-        HttpResponse(statusCode: 200, data: json.encode({'words': words}));
-    when(http.get(any)).thenAnswer((_) async => response);
-    await loadAppFonts();
-    final home = HomePage(controller: Modular.get());
-
-    final builder = DeviceBuilder()
-      ..overrideDevicesForAllScenarios(devices: [
-        Device.phone,
-        Device.iphone11,
-        Device.tabletPortrait,
-        Device.tabletLandscape,
-      ])
-      ..addScenario(
-        name: 'First Letter F',
-        widget: home,
-        onCreate: (scenarioWidgetKey) async {
-          final txt = find.descendant(
-              of: find.byKey(const Key('firstLetter')),
-              matching: find.byType(TextField));
-          expect(txt.first, findsOneWidget);
-
-          await tester.enterText(txt.first, 'F');
-          await tester.pumpAndSettle();
-        },
+      await expectLater(
+        find.byType(HomePage),
+        matchesGoldenFile('golden/default_homepage.png'),
       );
-    await tester.pumpDeviceBuilder(builder);
-    await screenMatchesGolden(tester, 'firstLetterF');
+    },
+  );
+
+  testWidgets(
+      'Dado uma lista de palavras '
+      'Quando digitado a letra F na primeira caixa de texto '
+      'Deve exibir as palavras FUNIL e FUZIL ',
+      tags: 'golden', (tester) async {
+    FontLoader('MaterialIcons')
+      ..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'))
+      ..load();
+    FontLoader('Roboto')
+      ..addFont(rootBundle.load('assets/fonts/Roboto-Regular.ttf'))
+      ..load();
+    when(searchWordsUsecase.call()).thenAnswer((_) async => words);
+    final home = HomePage(controller: controller);
+
+    await tester.pumpWidget(
+      makeTestableWidget(child: MaterialApp(home: home)),
+    );
+    final txt = find.descendant(
+        of: find.byKey(const Key('firstLetter')),
+        matching: find.byType(TextField));
+    expect(txt.first, findsOneWidget);
+
+    await tester.enterText(txt.first, 'F');
+    await tester.pumpAndSettle();
+
+    await expectLater(
+      find.byType(HomePage),
+      matchesGoldenFile('golden/first_letter_F.png', version: 2),
+    );
   });
 }

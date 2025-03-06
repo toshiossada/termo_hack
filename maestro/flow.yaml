@@ -24,3 +24,4 @@ appId: br.com.flutterbrasil.termo
 - scrollUntilVisible:
     element: 'ANDRE'
     direction: UP
+
